@@ -1046,7 +1046,7 @@
                                     </div><a class="editor__resize" href="javascript:void(0);">调整高度</a>
 
 
-                                    <div class=" publish-footer">
+                                    <div class=" publish-footer" style="width:100%">
                                         <div class="container">
                                             <div class="operations clearfix">
                                                 <div class="shareToWeibo checkbox pull-left mr10 mb0">
