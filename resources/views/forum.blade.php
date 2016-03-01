@@ -79,6 +79,8 @@
                         <div class="answers answered">
                             7<small>回答</small>
                         </div>
+                        <div>
+                        </div>
                         <div class="views hidden-xs">
                             133<small>浏览</small>
                         </div>
