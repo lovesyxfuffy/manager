@@ -1046,8 +1046,8 @@
                                     </div><a class="editor__resize" href="javascript:void(0);">调整高度</a>
 
 
-                                    <div class=" publish-footer" style="width:100%">
-                                        <div class="container">
+                                    <div class=" publish-footer">
+                                        <div class="container" style="width:100%">
                                             <div class="operations clearfix">
                                                 <div class="shareToWeibo checkbox pull-left mr10 mb0">
                                                     <label for="shareToWeibo"><input type="checkbox" id="shareToWeibo"> 同步到新浪微博</label>
