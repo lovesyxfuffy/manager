@@ -1,0 +1,52 @@
+/*tab页面标签*/
+.label-item {
+	width:90px;
+	height:33px;
+	color:#249F5B;
+	border:1px solid #249F5B;
+	background-color: #FFFFFF;
+	margin-right: 25px;
+}
+
+.label-item:hover{
+	background-color: #249F5B;
+	color:#FFFFFF;
+}
+
+
+.label-item2 {
+	width:90px;
+	height:33px;
+	color:#FFFFFF;
+	background-color: #249F5B;
+}
+.label-item2:hover{
+	background-color: #249F5B;
+	color:#FFFFFF;
+}
+
+/*userPage页面z展示标签*/
+/*************标签设置*************/
+.label-item-box{
+}
+
+.label-item-btn{
+	width: 86px;
+	padding: 5px 5px;
+	margin:0 5px;
+	display: inline-block;
+	text-align: center;
+	background-color: #249f5b;
+	border-radius: 10%;
+	margin-bottom: 10px;
+	color: #FFFFFF;
+}
+
+.label-item-btn:link,
+.label-item-btn:visited,
+.label-item-btn:hover,
+.label-item-btn:active{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
