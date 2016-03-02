@@ -64,7 +64,7 @@ class PostController extends Controller
     {
         $start = $request->has('start') ? $request->input('start') : 0;
         $num = $request->has('num') ? $request->input('num') : 10;
-        $posts = DB::select('select id, title, author_id, click_num, reply_num, create_time  from posts order by modify_time limit ?, ?', [$start, $num]);
+        $posts = DB::select('select *  from posts order by modify_time limit ?, ?', [$start, $num]);
         /*foreach($posts as $post)
         {
             $name = DB::select('select username from users where id = ?', [$post->author_id]);
