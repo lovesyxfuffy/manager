@@ -31,3 +31,13 @@ Route::get('show/{view}', function ($view) {
 Route::group(['middleware' => ['web']], function () {
     //
 });
+Route::group(['prefix'=>'post'],function(){
+    Route::get('all', 'PostController@get_all_post');
+
+    Route::post('/', 'PostController@new_post');
+
+    Route::get('/{id}', 'PostController@enter_post');
+
+    Route::post('reply', 'ReplyController@new_reply');
+
+});
