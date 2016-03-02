@@ -18,7 +18,7 @@
                 <li><a href="/questions/unanswered">未回答的</a></li>
             </ul>
 
-            <div class="stream-list question-stream">
+            <div class="stream-list question-stream" style="min-height:550px;">
                 @foreach($posts as $post)
                     <section class="stream-list__item">
                         <div class="qa-rank">
