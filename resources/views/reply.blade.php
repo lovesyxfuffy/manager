@@ -1,6 +1,6 @@
 @extends('blank')
 @section('title')
-    论坛
+   发布回答
 @stop
 
 @section('head')
@@ -8,6 +8,29 @@
     <link type="text/css" rel="stylesheet" href="chrome-extension://kfgmnlgjmofpiicpgohgfpeabgpmhjdp/style.css">
     <link rel="stylesheet" href="https://sf-static.b0.upaiyun.com/v-56d6b848/qa/css/qa_all.css">
     <link rel="stylesheet" href="https://sf-static.b0.upaiyun.com/v-56d6b848/global/css/responsive.css">
+    <script>
+        function post()
+        {
+            $.ajax({
+                url: "{{url('reply')}}",
+                type: "post",
+                data: {
+                    content: $("#reply_content").val(),
+                    post_id:"{{$post_id}}"
+                },
+                success:function(data) {
+                    if (data == 0) {
+                        alert("成功了!");
+                        location.reload();
+                    }
+                    else
+                        alert("失败了");
+                }
+
+            });
+        }
+    </script>
+
 @stop
 
 @section('content')
@@ -18,9 +41,7 @@
                 <a href="/q/1010000004527231">移动web页面如何实现分享到微信、QQ等分享功能？</a></h1>
 
             <div class="author">
-                <ul class="taglist--inline inline-block question__title--tag mr10">
-                    <li class="tagPopup mb5"><a class="tag" href="/t/javascript" data-toggle="popover" data-img="https://sfault-avatar.b0.upaiyun.com/195/823/1958237468-1040000000089436_huge256" data-placement="top" data-original-title="javascript" data-id="1040000000089436">javascript</a></li>
-                </ul>
+
                 <div class="question__author">
                     <a href="/u/joeny" class="mr5"><strong>Joeny</strong></a>
                     6 分钟前提问<span class="hidden-xs">
@@ -28,20 +49,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
-            <ul class="widget-action--ver list-unstyled">
-                <li>
-                    <button type="button" id="sideFollow" class="btn btn-success btn-sm" data-id="1010000004527231" data-do="follow" data-type="question" data-toggle="tooltip" data-placement="right" title="" data-original-title="关注后将获得更新提醒">关注
-                    </button>
-                    <strong>2</strong> 关注
-                </li>
-                <li>
-                    <button type="button" id="sideBookmark" class="btn btn-default btn-sm" data-id="1010000004527231" data-type="question">收藏
-                    </button>
-                    <strong id="sideBookmarked">0</strong> 收藏，<strong class="no-stress">15</strong> 浏览
-                </li>
-            </ul>
-        </div>
+
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-9 main">
@@ -75,9 +83,7 @@
                         <div class="post-opt col-md-8">
                             <ul class="list-inline mb0">
                                 <li><a href="/q/1010000004527231">6 分钟前提问</a></li>
-                                <li data-toggle="tooltip" data-placement="top" title="" class="edit-btn" data-original-title="声望达到250开启">
-                                    编辑
-                                </li>
+
 
                                 <li><a href="javascript:void(0);" class="comments" data-id="1010000004527231" data-target="#comment-1010000004527231">
                                         评论</a></li>
@@ -180,7 +186,6 @@
                                     <li><a href="/q/1010000004527231/a-1020000004527247"> 1 分钟前回答</a> <span class="text-muted">
 
                     </span></li>
-                                    <li data-toggle="tooltip" data-placement="top" title="" class="edit-btn" data-original-title="声望达到500开启">编辑</li>
 
                                     <li><a href="javascript:void(0);" class="comments" data-id="1020000004527247" data-target="#comment-1020000004527247">
                                             评论</a></li>
@@ -256,101 +261,23 @@
                 <h4>撰写答案</h4>
                 <input type="hidden" id="draftId" value="">
                 <input type="hidden" value="1010000004527231" id="questionId">
-                <form action="/question/1010000004527231/answers/add" method="post" class="editor-wrap">
+                <form  class="editor-wrap">
                     <div class="editor" id="questionText">
-                        <textarea id="answerEditor" name="text" class="form-control" rows="4" placeholder="撰写答案..."></textarea>
+                        <textarea id="reply_content" name="reply_content" class="form-control" rows="15" placeholder="撰写答案..."></textarea>
                     </div>
-                    <div id="answerSubmit" class="hide mt15 clearfix">
-                        <div class="checkbox pull-left">
-                            <label><input type="checkbox" class="" id="shareToWeibo">
-                                同步到新浪微博</label>
-                        </div>
-                        <div class="pull-right">
-                    <span id="editorStatus" class="hidden text-muted">
 
-                    </span>
-                            <a id="dropIt" href="javascript:void(0);" class="mr10 hidden">[舍弃]</a>
-                            <button type="submit" id="answerIt" data-id="1010000004527231" class="btn btn-lg btn-primary ml20">提交回答
-                            </button>
-                        </div>
-                    </div>
+                    <a onclick="post" class="btn btn-default btn-sm inviteBtn ml5" style="float:right;">回答</a>
                 </form>
             </div>
 
-            <div class="widget-invite mt30">
-                <p>
-                    <span class="text-muted">不知道答案？你还可以</span>
-                    <a href="#" class="btn btn-default btn-sm inviteBtn ml5" data-title="移动web页面如何实现分享到微信、QQ等分享功能？" data-url="http://sfau.lt/bNs9T1" data-id="1010000004527231">邀请回答</a>
-                </p>
-            </div>
+
 
         </div>
         <!-- /.main -->
 
 
 
-        <div class="col-xs-12 col-md-3 side">
 
-            <div class="widget-box no-border">
-                <h2 class="h4 widget-box__title">相似问题</h2>
-                <ul class="widget-links list-unstyled">
-                    <li class="widget-links__item"><a title="javascript移动端web可以左右移动的导航栏应该如何布局" href="/q/1010000003800345">javascript移动端web可以左右移动的导航栏应该如何布局</a>
-                        <small class="text-muted">
-                            2 回答
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="javascript 后台执行代码" href="/q/1010000002876281">javascript 后台执行代码</a>
-                        <small class="text-muted">
-                            1 回答
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="Web应用集成IM功能" href="/q/1010000002619606">Web应用集成IM功能</a>
-                    </li>
-                    <li class="widget-links__item"><a title="如何组织前端javascript代码" href="/q/1010000003830319">如何组织前端javascript代码</a>
-                        <small class="text-muted">
-                            5 回答
-                            |                             已解决
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="关于parse-server，javascript-SDK在WEB环境下开发的安全性问题" href="/q/1010000004415998">关于parse-server，javascript-SDK在WEB环境下开发的安全性问题</a>
-                        <small class="text-muted">
-                            1 回答
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="用chrome调试移动web页面，不触发tap事件" href="/q/1010000003927435">用chrome调试移动web页面，不触发tap事件</a>
-                        <small class="text-muted">
-                            2 回答
-                            |                             已解决
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="javascript 实现复制链接" href="/q/1010000003064003">javascript 实现复制链接</a>
-                        <small class="text-muted">
-                            2 回答
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="能否使用JavaScript来ping一个IP？" href="/q/1010000002735229">能否使用JavaScript来ping一个IP？</a>
-                        <small class="text-muted">
-                            3 回答
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="javascript实现startswith" href="/q/1010000002569299">javascript实现startswith</a>
-                        <small class="text-muted">
-                            4 回答
-                            |                             已解决
-                        </small>
-                    </li>
-                    <li class="widget-links__item"><a title="web QQ 前端桌面效果是如何实现的" href="/q/1010000000200630">web QQ 前端桌面效果是如何实现的</a>
-                        <small class="text-muted">
-                            2 回答
-                            |                             已解决
-                        </small>
-                    </li>
-                </ul>
-            </div>
-            <div class="widget-share__full" data-text="移动web页面如何实现分享到微信、QQ等分享功能？" data-url="https://segmentfault.com/q/1010000004527231" data-shorturl="http://sfau.lt/bNs9T1"><div style="margin-bottom:10px;">分享扩散：</div><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/q/1010000004527231" data-shorturl="http://sfau.lt/bNs9T1"><span class="icon-sn-dotted" data-original-title="" title=""></span><strong class="visible-xs-inline">•••</strong></a></div>
-
-
-        </div><!-- /.side -->
 
     </div>
 @stop

@@ -95,7 +95,7 @@ class PostController extends Controller
         $post_id = $id;
         $replies = DB::select('select type, author_id, post_time, content from replies where post_id = ?', [$post_id]);
         DB::update('update posts set click_num = click_num+1 where id = ?', [$post_id]);
-        return view('post', ['replies' => $replies, "post_id" => $post_id]);
+        return view('reply', ['replies' => $replies, "post_id" => $post_id]);
         //return json_encode($replies);
     }
 }

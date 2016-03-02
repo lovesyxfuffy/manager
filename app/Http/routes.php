@@ -32,12 +32,13 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 Route::group(['prefix'=>'post'],function(){
-    Route::get('all', 'PostController@get_all_post');
+    Route::get('all', 'PostController@get_all_post');//显示所有
 
-    Route::post('/', 'PostController@new_post');
+    Route::post('/', 'PostController@new_post');//发布帖子
+
+    Route::post('reply', 'ReplyController@new_reply');//
 
     Route::get('/{id}', 'PostController@enter_post');
 
-    Route::post('reply', 'ReplyController@new_reply');
 
 });
