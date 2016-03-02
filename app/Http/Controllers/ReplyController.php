@@ -35,6 +35,10 @@ class ReplyController extends Controller
         $reply->content = $request->input('content');
         $reply->author_id = 1;  //$reply->author_id = $request->sessin()->get('uid');
         $reply->save();
+        $post=Post::find($post_id);
+
+        $post->modify_time=date("Y-m-d H:i:s");
+        $post->save();
         DB::update('update posts set reply_num = reply_num+1 where id = ?', [$post_id]);
         return 0;
     }
