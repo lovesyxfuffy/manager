@@ -6,9 +6,43 @@
 @section('head')
     <link rel="stylesheet" href="https://sf-static.b0.upaiyun.com/v-56d41406/global/css/global.css">
     <link type="text/css" rel="stylesheet" href="chrome-extension://kfgmnlgjmofpiicpgohgfpeabgpmhjdp/style.css">
+    <link rel="stylesheet" href="https://sf-static.b0.upaiyun.com/v-56d6b848/qa/css/qa_all.css">
+    <link rel="stylesheet" href="https://sf-static.b0.upaiyun.com/v-56d6b848/global/css/responsive.css">
 @stop
 
 @section('content')
+    <div class="row">
+        <div class="col-md-9 col-sm-8 col-xs-12">
+            <h1 class="h3 title" id="questionTitle" data-id="1010000004527231">
+                <span class="question__title--icon-symbol mb10">问</span>
+                <a href="/q/1010000004527231">移动web页面如何实现分享到微信、QQ等分享功能？</a></h1>
+
+            <div class="author">
+                <ul class="taglist--inline inline-block question__title--tag mr10">
+                    <li class="tagPopup mb5"><a class="tag" href="/t/javascript" data-toggle="popover" data-img="https://sfault-avatar.b0.upaiyun.com/195/823/1958237468-1040000000089436_huge256" data-placement="top" data-original-title="javascript" data-id="1040000000089436">javascript</a></li>
+                </ul>
+                <div class="question__author">
+                    <a href="/u/joeny" class="mr5"><strong>Joeny</strong></a>
+                    6 分钟前提问<span class="hidden-xs">
+                                                                      </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
+            <ul class="widget-action--ver list-unstyled">
+                <li>
+                    <button type="button" id="sideFollow" class="btn btn-success btn-sm" data-id="1010000004527231" data-do="follow" data-type="question" data-toggle="tooltip" data-placement="right" title="" data-original-title="关注后将获得更新提醒">关注
+                    </button>
+                    <strong>2</strong> 关注
+                </li>
+                <li>
+                    <button type="button" id="sideBookmark" class="btn btn-default btn-sm" data-id="1010000004527231" data-type="question">收藏
+                    </button>
+                    <strong id="sideBookmarked">0</strong> 收藏，<strong class="no-stress">15</strong> 浏览
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12 col-md-9 main">
             <article class="widget-question__item">
