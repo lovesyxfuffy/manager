@@ -23,6 +23,7 @@ class Post extends Model
      * content
      * status   1   默认值
      */
+    protected $table = 'posts';
     public $timestamps = false;
 //    protected $fillable = [
 //        'author_id', 'time', 'click_num', 'title', 'content'

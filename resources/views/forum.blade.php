@@ -22,14 +22,12 @@
                 @foreach($posts as $post)
                     <section class="stream-list__item">
                         <div class="qa-rank">
-                            <div class="votes hidden-xs">
-                                0<small>投票</small>
-                            </div>
+
                             <div class="answers">
-                                0<small>回答</small>
+                                {{$post->click_num}}<small>回答</small>
                             </div>
                             <div class="views hidden-xs">
-                                9<small>浏览</small>
+                                {{$post->click_num}}<small>浏览</small>
                             </div>
                         </div>
                         <div class="summary">
@@ -37,10 +35,10 @@
                                 <li>
                                     <a href="/u/wojiujiaotudou">我就叫土豆</a>
                                     <span class="split"></span>
-                                    <a href="/q/1010000004518087" class="askDate" data-created="1456821997">2 分钟前提问</a>
+                                    <a href="/q/1010000004518087" class="askDate" data-created="1456821997">{{ceil((time()-strtotime($post->modify_time))/60)}}分钟前提问</a>
                                 </li>
                             </ul>
-                            <h2 class="title"><a href="/q/1010000004518087">急求:阿里云搭建SVN.不能访问</a></h2>
+                            <h2 class="title"><a href="/q/1010000004518087">{{$post->title}}</a></h2>
                             <ul class="taglist--inline ib">
                                 <li class="tagPopup"><a class="tag tag-sm" href="/t/%E9%98%BF%E9%87%8C%E4%BA%91" data-toggle="popover" data-original-title="阿里云" data-id="1040000000126687">阿里云</a></li><li class="tagPopup"><a class="tag tag-sm" href="/t/svn" data-toggle="popover" data-original-title="svn" data-id="1040000000089447">svn</a></li>            </ul>
                         </div>
