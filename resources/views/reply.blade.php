@@ -38,14 +38,13 @@
         <div class="col-md-9 col-sm-8 col-xs-12">
             <h1 class="h3 title" id="questionTitle" data-id="1010000004527231">
                 <span class="question__title--icon-symbol mb10">问</span>
-                <a href="/q/1010000004527231">移动web页面如何实现分享到微信、QQ等分享功能？</a></h1>
+                    {{$title}}</h1>
 
             <div class="author">
 
                 <div class="question__author">
-                    <a href="/u/joeny" class="mr5"><strong>Joeny</strong></a>
-                    6 分钟前提问<span class="hidden-xs">
-                                                                      </span>
+                    <a href="/u/joeny" class="mr5"><strong>Someone</strong></a>
+                        <span class="hidden-xs"></span>
                 </div>
             </div>
         </div>
@@ -55,7 +54,7 @@
         <div class="col-xs-12 col-md-9 main">
             <article class="widget-question__item">
                 <div class="post-col">
-                    <div class="widget-vote">
+                    <!--div class="widget-vote">
                         <button type="button" class="like" data-id="1010000004527231" data-type="question" data-do="like" data-toggle="tooltip" data-placement="top" title="" data-original-title="问题对人有帮助，内容完整，我也想知道答案">
                             <span class="sr-only">问题对人有帮助，内容完整，我也想知道答案</span>
                         </button>
@@ -63,23 +62,19 @@
                         <button type="button" class="hate" data-id="1010000004527231" data-type="question" data-do="hate" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="问题没有实际价值，缺少关键内容，没有改进余地">
                             <span class="sr-only">问题没有实际价值，缺少关键内容，没有改进余地</span>
                         </button>
-                    </div>
+                    </div-->
                     <!-- end .widget-vote -->
                 </div>
 
                 <div class="post-offset">
                     <div class="question fmt">
-                                                            <pre class="hljs"><div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="移动web页面（浏览器打开的web应用，非App内置的Web页面）内有分享按钮，点击可分享到朋友圈，微信好友，QQ......
-据说是使用相关插件，求指导！
-" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><code>移动web页面（浏览器打开的web应用，非App内置的Web页面）内有分享按钮，点击可分享到朋友圈，微信好友，QQ......
-                                                                    据说是使用相关插件，求指导！
-                                                                </code></pre>
+                       <pre class="hljs"><div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><code>{{$replies[0]->content}}</code></pre>
 
                     </div>
 
 
 
-                    <div class="row">
+                    <!--div class="row">
                         <div class="post-opt col-md-8">
                             <ul class="list-inline mb0">
                                 <li><a href="/q/1010000004527231">6 分钟前提问</a></li>
@@ -108,7 +103,7 @@
                         </div>
 
 
-                    </div>
+                    </div-->
                     <div class="widget-comments hidden" id="comment-1010000004527231" data-id="1010000004527231">
                         <div class="widget-comments__form row">
 
@@ -147,12 +142,12 @@
             </article>
 
             <div class="widget-answers">
-                <div class="btn-group pull-right" role="group">
+                <!--div class="btn-group pull-right" role="group">
                     <a href="/q/1010000004527231#answers-title" id="sortby-rank" class="btn btn-default btn-xs active">默认排序</a>
                     <a href="?sort=created#answers-title" id="sortby-created" class="btn btn-default btn-xs">时间排序</a>
-                </div>
+                </div-->
 
-                <h2 class="title h4 mt30 mb20 post-title" id="answers-title">1 个回答</h2>
+                <h2 class="title h4 mt30 mb20 post-title" id="answers-title"></h2>
 
 
 
@@ -160,7 +155,7 @@
 
                 <article class="clearfix widget-answers__item" id="a-1020000004527247">
                     <div class="post-col">
-                        <div class="widget-vote">
+                        <!--div class="widget-vote">
                             <button type="button" class="like" data-id="1020000004527247" data-type="answer" data-do="like" data-toggle="tooltip" data-placement="top" title="" data-original-title="答案对人有帮助，有参考价值">
                                 <span class="sr-only">答案对人有帮助，有参考价值</span>
                             </button>
@@ -169,19 +164,21 @@
                                 <span class="sr-only">答案没帮助，是错误的答案，答非所问</span>
                             </button>
 
-                        </div>
+                        </div-->
                     </div>
-
+                    <span style="display:none" >{{$j = 1}}</span>
+                    @foreach($replies as $reply)
                     <div class="post-offset">
+                        {{$j++}}楼
                         <div class="answer fmt">
-                            <p>如果不是app内置web页面,只能使用js的一键分享.具体详情可以百度<code>一键分享</code>,有许多分享平台.<br>如果是app的话还可以使用混淆交互,具体详情百度<code>js android 交互</code></p>
+                            <p>{{$reply->content}}</p>
                         </div>
 
 
 
                         <div class="row answer__info--row">
                             <div class="post-opt col-md-8 col-sm-8 col-xs-10">
-                                <ul class="list-inline mb0">
+                                <!--ul class="list-inline mb0">
 
                                     <li><a href="/q/1010000004527231/a-1020000004527247"> 1 分钟前回答</a> <span class="text-muted">
 
@@ -196,7 +193,7 @@
                                             <li><a href="#911" data-id="1020000004527247" data-toggle="modal" data-target="#911" data-type="answer" data-typetext="答案">举报</a></li>
                                         </ul>
                                     </li>
-                                </ul>
+                                </ul-->
                             </div>
 
                             <div class="col-md-2 col-sm-2 col-xs-2 answer__info--author-avatar">
@@ -204,7 +201,7 @@
                             </div>
                             <div class="col-md-2 col-sm-2 hidden-xs answer__info--author">
                                 <div class=" answer__info--author-warp">
-                                    <a class="answer__info--author-name" title="august1996" href="/u/august1996">august1996</a><span class="answer__info--author-rank">18 声望</span></div>
+                                    <a class="answer__info--author-name" title="august1996" href="/u/august1996">Other One</a><!--span class="answer__info--author-rank">18 声望</span--></div>
                             </div>
                         </div>
 
@@ -212,10 +209,10 @@
                         <div class="widget-comments hidden" id="comment-1020000004527247" data-id="1020000004527247">
                             <div class="widget-comments__form row">
 
-                                <form class="clearfix" method="POST">
+                                <form class="clearfix" method="">
                                     <div class="form-group mb0 widget-comments__form--input">
-                                        <input name="id" type="hidden" value="1020000004527247">
-                                        <textarea rows="1" name="text" class="form-control mono" id="commentText-1020000004527247" data-id="1020000004527247" placeholder="使用评论询问更多信息或提出修改意见，请不要在评论里回答问题"></textarea>
+                                        <input name="post_id" type="hidden" value="">
+                                        <textarea rows="1" name="content" class="form-control mono" id="commentText-1020000004527247" data-id="1020000004527247" placeholder="使用评论询问更多信息或提出修改意见，请不要在评论里回答问题"></textarea>
 
                                     </div>
                                     <div class="widget-comments__btn">
@@ -245,6 +242,8 @@
 
 
                     </div>
+                        <h2 class="title h4 mt30 mb20 post-title" id="answers-title"></h2>
+                        @endforeach
                 </article><!-- /article -->
 
 
@@ -258,15 +257,15 @@
 
 
             <div style="padding-left: 65px;">
-                <h4>撰写答案</h4>
-                <input type="hidden" id="draftId" value="">
-                <input type="hidden" value="1010000004527231" id="questionId">
-                <form  class="editor-wrap">
+                <h4>撰写回复</h4>
+
+                <form  class="editor-wrap" action="{{url('post/reply')}}" method="POST" />
+                    <input type="hidden" name="post_id" value="{{$post_id}}">
                     <div class="editor" id="questionText">
-                        <textarea id="reply_content" name="reply_content" class="form-control" rows="15" placeholder="撰写答案..."></textarea>
+                        <textarea id="reply_content" name="content" class="form-control" rows="15" placeholder="撰写答案..."></textarea>
                     </div>
 
-                    <a onclick="post" class="btn btn-default btn-sm inviteBtn ml5" style="float:right;">回答</a>
+                    <input type="submit" onclick="post" class="btn btn-default btn-sm inviteBtn ml5" style="float:right;" />
                 </form>
             </div>
 

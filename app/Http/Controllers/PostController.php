@@ -50,7 +50,7 @@ class PostController extends Controller
         $reply->content = $request->input('content');
         $reply->author_id = 1;  //$reply->author_id = $request->sessin()->get('uid');
         $reply->save();
-        return 0;
+        return redirect('post/all');
     }
 
     /**
@@ -62,15 +62,17 @@ class PostController extends Controller
      */
     public function get_all_post(Request $request)
     {
-        $start = $request->has('start') ? $request->input('start') : 0;
+        $page = $request->has('page') ? $request->input('page') : 1;
+        $start = ($page - 1) * 10;
         $num = $request->has('num') ? $request->input('num') : 10;
-        $posts = DB::select('select *  from posts order by modify_time limit ?, ?', [$start, $num]);
+        $posts = DB::select('select * from posts order by modify_time desc limit ?, ? ', [$start, $num]);
+        $res_num = DB::select('select count(id) as num from posts');
         /*foreach($posts as $post)
         {
             $name = DB::select('select username from users where id = ?', [$post->author_id]);
             $post->author_name = $name[0];
         }*/
-        return view('forum', ['posts' => $posts]);
+        return view('forum', ['posts' => $posts, 'num' => $res_num[0]->num, 'page' => $page]);
     }
 
     /**
@@ -93,9 +95,10 @@ class PostController extends Controller
         else
             $post_id = $request->input('post_id');*/
         $post_id = $id;
+        $post_title = DB::select('select title from posts where id = ?', [$post_id]);
         $replies = DB::select('select type, author_id, post_time, content from replies where post_id = ?', [$post_id]);
         DB::update('update posts set click_num = click_num+1 where id = ?', [$post_id]);
-        return view('reply', ['replies' => $replies, "post_id" => $post_id]);
+        return view('reply', ['replies' => $replies, "post_id" => $post_id, 'title' => $post_title[0]->title]);
         //return json_encode($replies);
     }
 }
