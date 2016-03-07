@@ -33,10 +33,18 @@
     <!--[if lt IE 9]>
     <script src="{{URL('/')}}/js/html5shiv.js"></script>
     <script src="{{URL('/')}}/js/respond.min.js"></script>
+
     <![endif]-->
+    <style type="text/css">
+    .error{
+        border-color:red !important;
+    }
+    </style>
+
 </head>
 
 <body class="login-layout">
+
 <div class="main-container">
     <div class="main-content">
         <div class="row">
@@ -64,18 +72,18 @@
 
                                     <div class="space-6"></div>
 
-                                    <form>
+                                    <form id="login_form">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="邮箱" />
+															<input type="text" class="form-control" name="username" placeholder="用户名" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="密码" />
+															<input type="password" class="form-control" name="password" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
@@ -84,11 +92,11 @@
 
                                             <div class="clearfix">
                                                 <label class="inline">
-                                                    <input type="checkbox" class="ace" />
+                                                    <input type="checkbox" name="keep-login" class="ace" />
                                                     <span class="lbl"> 保存登陆状态</span>
                                                 </label>
 
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <button type="button" onclick="loginFun()" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登陆</span>
                                                 </button>
@@ -171,31 +179,67 @@
                                     <div class="space-6"></div>
                                     <p> 输入您的信息: </p>
 
-                                    <form>
+                                    <form id="register_form" >
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="邮箱" />
-															<i class="ace-icon fa fa-envelope"></i>
+															<input type="text" id="reg_usrnm" class="form-control" name="username" placeholder="用户名" />
+															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
-
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="密码" />
+															<input type="email" id="reg_eml" class="form-control" name="email" placeholder="常用邮箱" />
+															<i class="ace-icon fa fa-user"></i>
+														</span>
+                                            </label>
+                                            <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" id="reg_psw" class="form-control" name="password" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="再次输入密码" />
+															<input type="password" id="reg_psw_agn" class="form-control" name="password_again" placeholder="再次输入密码" />
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
                                             </label>
+                                            <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" id="reg_rlnm" class="form-control" name="realname" placeholder="真实姓名" />
+															<i class="ace-icon fa fa-exclamation-circle"></i>
+														</span>
+                                            </label>
+                                            <label class="block clearfix">
+                                                <div class="control-group">
+                                                    <label class="control-label bolder blue">用户身份</label>
 
+                                                    <div class="radio" style="display:inline-block">
+                                                        <label>
+                                                            <input name="identity" value="student" type="radio" class="ace">
+                                                            <span class="lbl">学生</span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="radio" style="display:inline-block">
+                                                        <label>
+                                                            <input name="identity" value="teacher" type="radio" class="ace">
+                                                            <span class="lbl">教师</span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="radio" style="display:inline-block">
+                                                        <label>
+                                                            <input name="identity" value="company" type="radio" class="ace">
+                                                            <span class="lbl">企业</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </label>
                                             <label class="block">
-                                                <input type="checkbox" class="ace" />
+                                                <input type="checkbox" name="check"  class="ace" />
 														<span class="lbl">
 															我同意
 															<a href="#">用户条例</a>
@@ -210,8 +254,8 @@
                                                     <span class="bigger-110">重置</span>
                                                 </button>
 
-                                                <button type="button" class="width-65 pull-right btn btn-sm btn-success">
-                                                    <span class="bigger-110">注册</span>
+                                                <button onclick="checkFun()" type="button" class="width-65 pull-right btn btn-sm btn-success">
+                                                    <span class="bigger-110" >注册</span>
 
                                                     <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                                 </button>
@@ -269,6 +313,60 @@
     $('#id-text2').attr('class', 'white');
     $('#id-company-text').attr('class', 'light-blue');
 
+</script>
+<script>
+    $('form').click(function(){
+        $(this).find('.error').removeClass("error")
+    })
+    function checkFun(){
+        $.ajax({
+            type:"post",
+            url:"{{URL('account/register/check')}}",
+            data:$('#register_form').serialize(),
+            success:function(data,status){
+                //console.log(status)
+                if(status=='success'){
+                    var json=eval('('+data+')')
+                    console.log(json)
+                    if(json.username_err==1){
+                        $("#reg_usrnm").addClass('error')
+                    }
+                    if(json.password_err==1){
+                        $("#reg_psw").addClass('error')
+                    }
+                    if(json.realname_err==1){
+                        $("#reg_rlnm").addClass('error')
+                    }
+                    if(json.password_again_err==1){
+                        $("#reg_psw_agn").addClass('error')
+                    }
+                    if(json.identity_err==1){
+                        alert("请选择身份")
+                    }
+                    if(json.check_err==1){
+                        alert("请同意用户条例")
+                    }
+                }
+            }
+        })
+    }
+
+</script>
+<script>
+    function loginFun(){
+        $.ajax({
+            type:"post",
+            data:$('#login_form').serialize(),
+            url:"{{URL('account/login')}}",
+            success:function(data,status){
+                if(data==0)
+                        alert("登陆成功")
+                else if(data==-1)
+                        alert("登录失败")
+            }
+
+        })
+    }
 </script>
 </body>
 </html>

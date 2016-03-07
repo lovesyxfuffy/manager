@@ -42,3 +42,7 @@ Route::group(['prefix'=>'post'],function(){
 
 
 });
+Route::group(['prefix'=>'account'],function(){
+   Route::post('register/check','AccountController@register_check');
+   Route::post('login','AccountController@login');
+});
