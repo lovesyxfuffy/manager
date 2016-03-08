@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
+
     <title>Login Page - Ace Admin</title>
 
     <meta name="description" content="User login page" />
@@ -73,6 +74,7 @@
                                     <div class="space-6"></div>
 
                                     <form id="login_form">
+                                        {{csrf_field()}}
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -141,6 +143,7 @@
                                     </p>
 
                                     <form>
+                                        {{csrf_field()}}
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -180,6 +183,7 @@
                                     <p> 输入您的信息: </p>
 
                                     <form id="register_form" >
+                                        {{csrf_field()}}
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -321,6 +325,7 @@
     function checkFun(){
         $.ajax({
             type:"post",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('c ontent')},
             url:"{{URL('account/register/check')}}",
             data:$('#register_form').serialize(),
             success:function(data,status){
@@ -357,6 +362,7 @@
         $.ajax({
             type:"post",
             data:$('#login_form').serialize(),
+
             url:"{{URL('account/login')}}",
             success:function(data,status){
                 if(data==0)

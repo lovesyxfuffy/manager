@@ -11,12 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('show/{view}', function ($view) {
-    return view($view);
-});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -29,6 +24,12 @@ Route::get('show/{view}', function ($view) {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/',[ 'middleware'=>'check-login',function () {
+        return view('welcome');
+    }]);
+    Route::get('show/{view}', function ($view) {
+        return view($view);
+    });
     //
 });
 Route::group(['prefix'=>'post'],function(){
@@ -42,7 +43,10 @@ Route::group(['prefix'=>'post'],function(){
 
 
 });
-Route::group(['prefix'=>'account'],function(){
+Route::group(['prefix'=>'account','middleware' => ['web']],function(){
+   Route::get('login',function(){
+       return view('login');
+   });
    Route::post('register/check','AccountController@register_check');
    Route::post('login','AccountController@login');
 });
