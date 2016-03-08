@@ -85,6 +85,7 @@
                                 <form id="question" method="POST" role="form" style="margin-left:30px;margin-right:20px;margin-top:20px;" action="{{url('post')}}">
                                     <div class="form-group">
                                         <label for="title" class="sr-only">标题</label>
+                                        {{ csrf_field() }}
                                         <input id="myTitle" type="text" name="title" required="" data-error="" autocomplete="off" class="form-control tagClose input-lg" placeholder="标题" value="">
                                     </div>
 

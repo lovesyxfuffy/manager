@@ -31,7 +31,7 @@ class PostController extends Controller
         //添加新的post记录
         $post = new Post;
         //用户id应从session中获取，暂时默认为1，
-        $post->author_id = 1; //$post->author_id = $request->session()->get('uid');
+        $post->author_id = $request->session()->get('user_id');
         $post->create_time = date("Y-m-d H:i:s");
         $post->modify_time = date("Y-m-d H:i:s");
         $post->click_num = 0;
@@ -48,7 +48,7 @@ class PostController extends Controller
         $reply->post_id = $post->id;
         $reply->post_time = date("Y-m-d H:i:s");
         $reply->content = $request->input('content');
-        $reply->author_id = 1;  //$reply->author_id = $request->sessin()->get('uid');
+        $reply->author_id = $request->session()->get('user_id');
         $reply->save();
         return redirect('post/all');
     }

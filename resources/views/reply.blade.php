@@ -262,6 +262,7 @@
                 <h4>撰写回复</h4>
 
                 <form  class="editor-wrap" action="{{url('post/reply')}}" method="POST" />
+                    {{ csrf_field() }}
                     <input type="hidden" name="post_id" value="{{$post_id}}">
                     <div class="editor" id="questionText">
                         <textarea id="reply_content" name="content" class="form-control" rows="15" placeholder="撰写答案..."></textarea>
