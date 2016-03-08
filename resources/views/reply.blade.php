@@ -38,12 +38,12 @@
         <div class="col-md-9 col-sm-8 col-xs-12">
             <h1 class="h3 title" id="questionTitle" data-id="1010000004527231">
                 <span class="question__title--icon-symbol mb10">问</span>
-                    {{$title}}</h1>
+                    {{$post->title}}</h1>
 
             <div class="author">
 
                 <div class="question__author">
-                    <a href="/u/joeny" class="mr5"><strong>Someone</strong></a>
+                    <a href="/u/joeny" class="mr5"><strong>{{$post->username}}</strong></a>
                         <span class="hidden-xs"></span>
                 </div>
             </div>
@@ -202,7 +202,7 @@
                             </div>
                             <div class="col-md-2 col-sm-2 hidden-xs answer__info--author">
                                 <div class=" answer__info--author-warp">
-                                    <a class="answer__info--author-name" title="august1996" href="/u/august1996">Other One</a><!--span class="answer__info--author-rank">18 声望</span--></div>
+                                    <a class="answer__info--author-name" title="august1996" href="/u/august1996">{{$reply->username}}</a><!--span class="answer__info--author-rank">18 声望</span--></div>
                             </div>
                         </div>
 
