@@ -38,6 +38,7 @@
     <script src="{{URL('/')}}/js/html5shiv.min.js"></script>
     <script src="{{URL('/')}}/js/respond.min.js"></script>
     <![endif]-->
+
     @yield('head')
 </head>
 
