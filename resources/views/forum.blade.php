@@ -24,7 +24,7 @@
                         <div class="qa-rank">
 
                             <div class="answers">
-                                {{$post->click_num}}<small>回答</small>
+                                {{$post->reply_num}}<small>回答</small>
                             </div>
                             <div class="views hidden-xs">
                                 {{$post->click_num}}<small>浏览</small>

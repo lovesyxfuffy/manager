@@ -168,8 +168,9 @@
                     </div>
                     <span style="display:none" >{{$j = 1}}</span>
                     @foreach($replies as $reply)
+                        @if($j++ > 1)
                     <div class="post-offset">
-                        {{$j++}}楼
+                        {{$j - 1}}楼
                         <div class="answer fmt">
                             <p>{{$reply->content}}</p>
                         </div>
@@ -243,6 +244,7 @@
 
                     </div>
                         <h2 class="title h4 mt30 mb20 post-title" id="answers-title"></h2>
+                        @endif
                         @endforeach
                 </article><!-- /article -->
 

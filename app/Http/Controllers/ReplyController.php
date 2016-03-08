@@ -40,6 +40,6 @@ class ReplyController extends Controller
         $post->modify_time=date("Y-m-d H:i:s");
         $post->save();
         DB::update('update posts set reply_num = reply_num+1 where id = ?', [$post_id]);
-        return redirect('post/'+$post_id);
+        return redirect('post/'.$post_id);
     }
 }
