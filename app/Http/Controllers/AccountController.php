@@ -55,11 +55,12 @@ class AccountController extends Controller{
     function login(Request $request){
         $username=$request->input('username');
         $password=$request->input('password');
-        $result=DB::table('user')->where('username',$username)->where('password',$password)->first(['id']);
-        $id=$result->id;
-        if($id==''&&$id==null)
+        $result=DB::table('user')->where('username',$username)->where('password',$password);
+
+        if($result->count('id')!=1)
             return -1;
         else{
+            $id=$result->first(['id'])->id;
             session(['user_id'=>$id]);
             $response=new Response('0');
             $response->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));

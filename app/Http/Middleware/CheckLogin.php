@@ -16,13 +16,18 @@ class CheckLogin{
         if($user_id=='') {
             $username = $request->cookie('username');
             $password = $request->cookie('password');
-            $result = DB::table('user')->where('username', $username)->where('password', $password)->first(['id']);
-            $id = $result->id;
-            if ($id != '') {
-                session(['user_id' => $id]);
-                return $next($request);
-            } else
-                redirect('account/login');
+            if($username!=''&&$password!=''){
+                $result = DB::table('user')->where('username', $username)->where('password', $password);
+                if ($result->count('id')==1) {
+                    $id = $result->first(['id'])->id;
+                    session(['user_id' => $id]);
+                    return $next($request);
+                } else
+                    return redirect('account/login');
+            }
+            else{
+                return redirect('account/login');
+            }
         }
         else{
             return $next($request);

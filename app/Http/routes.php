@@ -27,6 +27,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/',[ 'middleware'=>'check-login',function () {
         return view('welcome');
     }]);
+    Route::get('/welcome',[ 'middleware'=>'check-login',function () {
+        return view('welcome');
+    }]);
     Route::get('show/{view}', function ($view) {
         return view($view);
     });
@@ -43,7 +46,7 @@ Route::group(['prefix'=>'post'],function(){
 
 
 });
-Route::group(['prefix'=>'account','middleware' => ['web']],function(){
+Route::group(['prefix'=>'account','middleware' => 'web'],function(){
    Route::get('login',function(){
        return view('login');
    });
