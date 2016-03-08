@@ -19,9 +19,13 @@ class AccountController extends Controller{
         $realname=$request->input('realname');
         $identity=$request->input('identity');
         $check=$request->input('check');
+        $email=$request->input('email');
         $reg="/[0-9A-Za-z_]{1,45}/";
+        $reg_email='/^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/';
         $reg_cn='/^[\x{4e00}-\x{9fa5}]{1,45}$/u';
         $result=array();
+        if(!preg_match($reg_email,$email))
+            $result['email_err']=1;
         if(!preg_match($reg,$username))
             $result['username_err']=1;
         if(!preg_match($reg,$password))

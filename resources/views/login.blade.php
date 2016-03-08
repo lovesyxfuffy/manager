@@ -142,7 +142,7 @@
                                         输入您账号绑定的邮箱，我们将会把密码发送给您
                                     </p>
 
-                                    <form>
+                                    <form id="email_form">
                                         {{csrf_field()}}
                                         <fieldset>
                                             <label class="block clearfix">
@@ -151,7 +151,12 @@
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
                                             </label>
-
+                                            <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" placeholder="用户名" />
+															<i class="ace-icon fa fa-user   "></i>
+														</span>
+                                            </label>
                                             <div class="clearfix">
                                                 <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
                                                     <i class="ace-icon fa fa-lightbulb-o"></i>
@@ -335,6 +340,9 @@
                     console.log(json)
                     if(json.username_err==1){
                         $("#reg_usrnm").addClass('error')
+                    }
+                    if(json.email_err==1){
+                        $("#reg_eml").addClass('error')
                     }
                     if(json.password_err==1){
                         $("#reg_psw").addClass('error')
