@@ -33,9 +33,18 @@
                         <div class="summary">
                             <ul class="author list-inline">
                                 <li>
-                                    <a href="/u/wojiujiaotudou">我就叫土豆</a>
+                                    <a href="/u/wojiujiaotudou">{{$post->username}}</a>
                                     <span class="split"></span>
-                                    <a href="/q/1010000004518087" class="askDate" data-created="1456821997">{{ceil((time()-strtotime($post->modify_time))/60)}}分钟前发帖</a>
+                                    <span style="display:none">{{$min = ceil((time()-strtotime($post->modify_time))/60)}}</span>
+                                    <a href="/q/1010000004518087" class="askDate" data-created="1456821997">
+                                        @if($min < 60)
+                                            {{$min."分钟"}}
+                                        @elseif($min < 1440)
+                                            {{(ceil($min/60))."小时"}}
+                                        @else
+                                            {{(ceil($min/60/24))."天"}}
+                                        @endif
+                                        前发帖</a>
                                 </li>
                             </ul>
                             <h2 class="title"><a href="{{url('/')}}/post/{{$post->id}}">{{$post->title}}</a></h2>
@@ -76,6 +85,7 @@
                                 <form id="question" method="POST" role="form" style="margin-left:30px;margin-right:20px;margin-top:20px;" action="{{url('post')}}">
                                     <div class="form-group">
                                         <label for="title" class="sr-only">标题</label>
+                                        {{ csrf_field() }}
                                         <input id="myTitle" type="text" name="title" required="" data-error="" autocomplete="off" class="form-control tagClose input-lg" placeholder="标题" value="">
                                     </div>
 

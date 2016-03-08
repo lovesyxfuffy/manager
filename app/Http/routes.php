@@ -35,12 +35,12 @@ Route::group(['middleware' => ['web']], function () {
     });
     //
 });
-Route::group(['prefix'=>'post'],function(){
+Route::group(['prefix'=>'post', 'middleware' => 'web'],function(){
     Route::get('all', 'PostController@get_all_post');//显示所有
 
-    Route::post('/', 'PostController@new_post');//发布帖子
+    Route::post('/', [ 'middleware'=>'check-login', 'uses' => 'PostController@new_post']);//发布帖子
 
-    Route::post('reply', 'ReplyController@new_reply');//
+    Route::post('reply',[ 'middleware'=>'check-login', 'uses' =>  'ReplyController@new_reply']);//
 
     Route::get('/{id}', 'PostController@enter_post');
 

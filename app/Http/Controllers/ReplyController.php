@@ -33,7 +33,7 @@ class ReplyController extends Controller
         $reply->post_id = $post_id;
         $reply->post_time = date("Y-m-d H:i:s");
         $reply->content = $request->input('content');
-        $reply->author_id = 1;  //$reply->author_id = $request->sessin()->get('uid');
+        $reply->author_id = $request->sessin()->get('user_id');
         $reply->save();
         $post=Post::find($post_id);
 

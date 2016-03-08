@@ -31,7 +31,7 @@ class PostController extends Controller
         //添加新的post记录
         $post = new Post;
         //用户id应从session中获取，暂时默认为1，
-        $post->author_id = 1; //$post->author_id = $request->session()->get('uid');
+        $post->author_id = $request->session()->get('user_id');
         $post->create_time = date("Y-m-d H:i:s");
         $post->modify_time = date("Y-m-d H:i:s");
         $post->click_num = 0;
@@ -48,7 +48,7 @@ class PostController extends Controller
         $reply->post_id = $post->id;
         $reply->post_time = date("Y-m-d H:i:s");
         $reply->content = $request->input('content');
-        $reply->author_id = 1;  //$reply->author_id = $request->sessin()->get('uid');
+        $reply->author_id = $request->session()->get('user_id');
         $reply->save();
         return redirect('post/all');
     }
@@ -65,7 +65,7 @@ class PostController extends Controller
         $page = $request->has('page') ? $request->input('page') : 1;
         $start = ($page - 1) * 10;
         $num = $request->has('num') ? $request->input('num') : 10;
-        $posts = DB::select('select * from posts order by modify_time desc limit ?, ? ', [$start, $num]);
+        $posts = DB::select('select posts.id id, author_id, create_time, modify_time, click_num, reply_num, title, username from posts left join user on user.id = author_id order by modify_time desc limit ?, ? ', [$start, $num]);
         $res_num = DB::select('select count(id) as num from posts');
         /*foreach($posts as $post)
         {
@@ -95,10 +95,10 @@ class PostController extends Controller
         else
             $post_id = $request->input('post_id');*/
         $post_id = $id;
-        $post_title = DB::select('select title from posts where id = ?', [$post_id]);
-        $replies = DB::select('select type, author_id, post_time, content from replies where post_id = ?', [$post_id]);
+        $post = DB::select('select title, username from posts left join user on user.id = author_id where posts.id = ?', [$post_id]);
+        $replies = DB::select('select type, author_id, post_time, content, username from replies left join user on user.id = author_id where post_id = ?', [$post_id]);
         DB::update('update posts set click_num = click_num+1 where id = ?', [$post_id]);
-        return view('reply', ['replies' => $replies, "post_id" => $post_id, 'title' => $post_title[0]->title]);
+        return view('reply', ['replies' => $replies, "post_id" => $post_id, 'post' => $post[0]]);
         //return json_encode($replies);
     }
 }
