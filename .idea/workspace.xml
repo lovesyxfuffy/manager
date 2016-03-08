@@ -4,6 +4,7 @@
     <list default="true" id="b7738b6d-f5b8-4574-804e-5cf0caf8c18d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/login.blade.php" afterPath="$PROJECT_DIR$/resources/views/login.blade.php" />
     </list>
     <ignored path="manager.iws" />
@@ -36,13 +37,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/login.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73868775">
-              <caret line="363" column="10" selection-start-line="363" selection-start-column="10" selection-end-line="363" selection-end-column="10" />
+            <state vertical-scroll-proportion="-24.962963">
+              <caret line="392" column="30" selection-start-line="392" selection-start-column="30" selection-end-line="392" selection-end-column="30" />
               <folding>
-                <marker date="1457426977125" expanded="true" signature="15080:15192" placeholder="..." />
+                <marker date="1457449903343" expanded="true" signature="15110:15222" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -51,8 +52,8 @@
       <file leaf-file-name="AccountController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AccountController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.222222">
-              <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
+            <state vertical-scroll-proportion="-26.518518">
+              <caret line="86" column="34" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
               <folding>
                 <element signature="e#6#85#0#PHP" expanded="true" />
                 <element signature="e#118#146#0#PHP" expanded="true" />
@@ -114,11 +115,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.62963">
-              <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.47737557">
+              <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -127,8 +128,8 @@
       <file leaf-file-name="Kernel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.518518">
-              <caret line="50" column="61" selection-start-line="50" selection-start-column="61" selection-end-line="50" selection-end-column="61" />
+            <state vertical-scroll-proportion="-17.185184">
+              <caret line="38" column="7" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -159,12 +160,12 @@
         <option value="$PROJECT_DIR$/resources/views/reply.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/forum.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/blank.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/CheckLogin.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/resources/views/login.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" />
+        <option value="$PROJECT_DIR$/resources/views/login.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
       </list>
     </option>
   </component>
@@ -528,7 +529,13 @@
       <option name="project" value="LOCAL" />
       <updated>1457423450930</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="pull前commit">
+      <created>1457448251534</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1457448251534</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -537,7 +544,7 @@
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32908705" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -577,7 +584,8 @@
     <MESSAGE value="分页调至下方" />
     <MESSAGE value="登陆注册完成 登陆验证中间件完成" />
     <MESSAGE value="登陆注册完成 登陆验证中间件更正" />
-    <option name="LAST_COMMIT_MESSAGE" value="登陆注册完成 登陆验证中间件更正" />
+    <MESSAGE value="pull前commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="pull前commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -789,6 +797,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -913,14 +922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.518518">
-          <caret line="50" column="61" selection-start-line="50" selection-start-column="61" selection-end-line="50" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.888889">
@@ -964,18 +965,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.62963">
-          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+        <state vertical-scroll-proportion="-17.185184">
+          <caret line="38" column="7" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AccountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.222222">
-          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
+        <state vertical-scroll-proportion="-26.518518">
+          <caret line="86" column="34" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
           <folding>
             <element signature="e#6#85#0#PHP" expanded="true" />
             <element signature="e#118#146#0#PHP" expanded="true" />
@@ -985,11 +986,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/login.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73868775">
-          <caret line="363" column="10" selection-start-line="363" selection-start-column="10" selection-end-line="363" selection-end-column="10" />
+        <state vertical-scroll-proportion="-24.962963">
+          <caret line="392" column="30" selection-start-line="392" selection-start-column="30" selection-end-line="392" selection-end-column="30" />
           <folding>
-            <marker date="1457426977125" expanded="true" signature="15080:15192" placeholder="..." />
+            <marker date="1457449903343" expanded="true" signature="15110:15222" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47737557">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>

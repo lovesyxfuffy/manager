@@ -72,4 +72,19 @@ class AccountController extends Controller{
         }
 
     }
+    public function mail_to(Request $request){
+        $email=$request->input('email');
+        $username=$request->input("username");
+        $result=DB::table('user')->where('username',$username)->where('email',$email);
+        if($result->count()==1){
+            $password=$result->first(['password'])->password();
+            $to = $email;
+            $subject = "Test mail";
+            $message ="傻逼 你的密码是$password";
+            $from = "506247345@qq.com";
+            $headers = "From: $from";
+            mail($to,$subject,$message,$headers);
+            return new Response('0');
+        }
+    }
 }

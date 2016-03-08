@@ -147,13 +147,13 @@
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+															<input type="email" name="email" class="form-control" placeholder="Email" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
                                             </label>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名" />
+															<input type="text" name="username"  class="form-control" placeholder="用户名" />
 															<i class="ace-icon fa fa-user   "></i>
 														</span>
                                             </label>
@@ -381,6 +381,20 @@
 
         })
     }
+</script>
+<script>
+function mailFun(){
+    $.ajax({
+        type:"post",
+        data:$('#email_form').serialize(),
+        url:"{{URL('account/mail_to')}}",
+        success:function(data){
+            if(data==0){
+                alert('密码已发送')
+            }
+        }
+    })
+}
 </script>
 </body>
 </html>
