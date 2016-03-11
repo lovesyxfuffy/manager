@@ -26,7 +26,9 @@ class PostController extends Controller
     public function new_post(Request $request)
     {
         if(!($request->has('title') && $request->has('content')))
-            return 2;
+        {
+            return view('post/all', ['error' => '表单信息有误']);
+        }
 
         //添加新的post记录
         $post = new Post;

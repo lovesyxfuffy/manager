@@ -44,8 +44,15 @@ Route::group(['prefix'=>'post', 'middleware' => 'web'],function(){
 
     Route::get('/{id}', 'PostController@enter_post');
 
+});
+Route::group(['prefix'=>'project', 'middleware' => 'web'],function(){
+
+    Route::get('/{id}', 'ProjectController@enter_project');
+    Route::post('/', [ /*'middleware'=>'check-login',*/ 'uses' => 'ProjectController@new_Project']);//发布帖子
 
 });
+
+
 Route::group(['prefix'=>'account','middleware' => 'web'],function(){
    Route::get('login',function(){
        return view('login');

@@ -90,12 +90,12 @@
                         <!-- #section:plugins/fuelux.wizard.container -->
                         <div class="step-content pos-rel" id="step-container">
 
-                            <div class="step-pane active" id="step1">
+                            <div class="step-pane {{!isset($status) ? "active" : ""}}" id="step1">
                                 <h3 class="lighter block green">填写项目信息</h3>
 
-                                <form class="form-horizontal" id="sample-form">
+                                <form class="form-horizontal" id="sample-form" action="{{url('project')}}" method="POST">
                                     <!-- #section:elements.form.input-state -->
-
+                                    {{ csrf_field() }}
 
 
                                     <!-- /section:elements.form.input-state -->
@@ -103,7 +103,7 @@
                                         <label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">项目类型</label>
 
                                         <div class="col-xs-10 col-sm-5">
-                                            <select class="chosen-select"  id="form-field-select-3" data-placeholder="Choose a State...">
+                                            <select class="chosen-select"  id="form-field-select-3" data-placeholder="Choose a State..." name="pjt_type">
                                                 <option value="1">竞赛项目</option>
                                                 <option value="2">外包项目</option>
                                                 <option value="3">原创项目</option>
@@ -115,7 +115,7 @@
 
                                         <div class="col-xs-12 col-sm-5">
 																<span class="input-icon block">
-																	<input type="text" id="inputError2" class="width-100">
+																	<input type="text" id="inputError2" class="width-100" name="pjt_name">
 
 																</span>
                                         </div>
@@ -126,7 +126,7 @@
 
                                         <div class="col-xs-12 col-sm-5">
 																<span class="input-icon block">
-																	<textarea rows="6" type="text" id="inputError2" class="width-100"></textarea>
+																	<textarea rows="6" type="text" id="inputError2" class="width-100" name="pjt_info"></textarea>
 																</span>
                                         </div>
 
@@ -135,17 +135,17 @@
                                         <label class="col-sm-3 control-label no-padding-right"  for="form-field-4" disabled="disabled">项目金额</label>
 
                                         <div class="col-sm-9">
-                                            <input class="input-sm" type="text" id="form-field-4" placeholder="" />
+                                            <input class="input-sm" type="text" id="form-field-4" placeholder="" name="pjt_reward" />
                                             <div class="space-2"></div>
 
                                             <div class="help-block" id="input-size-slider"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-5"  disabled="disabled">人员总数</label>
+                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-5"  disabled="disabled" >人员总数</label>
 
                                         <div class="col-sm-9">
-                                            <input class="input-sm" type="text" id="form-field-5" placeholder="" />
+                                            <input class="input-sm" type="text" id="form-field-5" placeholder="" name="pjt_memberNum"/>
                                             <div class="space-2"></div>
                                             <div class="help-block" id="input-size-slider-2" ></div>
                                         </div>
@@ -156,7 +156,7 @@
                                            <div class="col-sm-3" style="padding-left: 0px;">
 
                                                <div class="input-group">
-                                                   <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+                                                   <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd" name="pjt_startTime" />
 																	<span class="input-group-addon">
 																		<i class="fa fa-calendar bigger-110"></i>
 																	</span>
@@ -165,20 +165,22 @@
                                             <div class="col-sm-1"><span style="font-size: large;">至</span></div>
                                             <div class="col-sm-3">
                                                 <div class="input-group">
-                                                    <input class="form-control date-picker" id="id-date-picker-2" type="text" data-date-format="dd-mm-yyyy" />
+                                                    <input class="form-control date-picker" id="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd" name="pjt_endTime" />
 																	<span class="input-group-addon">
 																		<i class="fa fa-calendar bigger-110"></i>
 																	</span>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="submit" class="btn btn-success btn-next" style="margin-left: 80%">
                                 </form>
 
 
                             </div>
 
-                            <div class="step-pane " id="step2">
+                            <div class="step-pane {{@$status == 0 ? "active" : ""}}" id="step2">
                                 <div>
                                     <div class="alert alert-success">
                                         <button type="button" class="close" data-dismiss="alert">
@@ -260,7 +262,7 @@
 
                         <!-- /section:plugins/fuelux.wizard.container -->
                         <hr>
-                        <div class="wizard-actions">
+                        <div class="wizard-actions" style="display:none">
                             <!-- #section:plugins/fuelux.wizard.buttons -->
                             <button class="btn btn-prev" disabled="disabled">
                                 <i class="ace-icon fa fa-arrow-left"></i>
@@ -436,6 +438,9 @@
         });
     </script>
     <script type="text/javascript">
+        @if(session('error'))
+                alert('{{session('error')}}');
+        @endif
         var grid_data =
                 [
                     {id:"1",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
