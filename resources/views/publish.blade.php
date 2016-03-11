@@ -90,7 +90,7 @@
                         <!-- #section:plugins/fuelux.wizard.container -->
                         <div class="step-content pos-rel" id="step-container">
 
-                            <div class="step-pane " id="step1">
+                            <div class="step-pane active" id="step1">
                                 <h3 class="lighter block green">填写项目信息</h3>
 
                                 <form class="form-horizontal" id="sample-form">
@@ -132,7 +132,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-4">项目金额</label>
+                                        <label class="col-sm-3 control-label no-padding-right"  for="form-field-4" disabled="disabled">项目金额</label>
 
                                         <div class="col-sm-9">
                                             <input class="input-sm" type="text" id="form-field-4" placeholder="" />
@@ -141,11 +141,19 @@
                                             <div class="help-block" id="input-size-slider"></div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-5"  disabled="disabled">人员总数</label>
 
+                                        <div class="col-sm-9">
+                                            <input class="input-sm" type="text" id="form-field-5" placeholder="" />
+                                            <div class="space-2"></div>
+                                            <div class="help-block" id="input-size-slider-2" ></div>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label no-padding-right" for="form-field-4">项目起止时间</label>
                                         <div class="col-sm-9">
-                                           <div class="col-sm-3">
+                                           <div class="col-sm-3" style="padding-left: 0px;">
 
                                                <div class="input-group">
                                                    <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
@@ -222,7 +230,7 @@
                                 </div>
                             </div>
 
-                            <div class="step-pane active" id="step3">
+                            <div class="step-pane " id="step3">
                                 <div class="center">
 
                                             <!-- PAGE CONTENT BEGINS -->
@@ -392,7 +400,7 @@
 
     </script>
     <script>
-        $( "#input-size-slider" ).css('width','700px').slider({
+        $( "#input-size-slider" ).css('width','620px').slider({
             value:1,
             range: "min",
             min: 1,
@@ -401,6 +409,19 @@
             slide: function( event, ui ) {
                 var val = parseInt(ui.value*1000);
                 $('#form-field-4').val(val);
+            }
+        });
+    </script>
+    <script>
+        $( "#input-size-slider-2" ).css('width','220px').slider({
+            value:1,
+            range: "min",
+            min: 1,
+            max: 15,
+            step: 1,
+            slide: function( event, ui ) {
+                var val = parseInt(ui.value);
+                $('#form-field-5').val(val);
             }
         });
     </script>
