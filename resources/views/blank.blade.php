@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{URL('/')}}/css/font-awesome.min.css" />
 
     <!-- page specific plugin styles -->
-
+    @yield('head')
     <!-- text fonts -->
     <link rel="stylesheet" href="{{URL('/')}}/css/ace-fonts.css" />
 
@@ -39,7 +39,7 @@
     <script src="{{URL('/')}}/js/respond.min.js"></script>
     <![endif]-->
 
-    @yield('head')
+
 </head>
 
 <body class="no-skin">
@@ -613,24 +613,19 @@
 
 <!-- basic scripts -->
 
-<!--[if !IE]> -->
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='{{URL('/')}}/js/jquery.min.js'>"+"<"+"/script>");
+
+
+<script src="{{URL('/')}}/js/jquery1x.min.js">
+</script>
+<script src="{{URL('/')}}/js/jquery.min.js">
 </script>
 
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='{{URL('/')}}/js/jquery1x.min.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='{{URL('/')}}/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+<script src="{{URL('/')}}/js/jquery.mobile.custom.min.js">
 </script>
 <script src="{{URL('/')}}/js/bootstrap.min.js"></script>
 
 <!-- page specific plugin scripts -->
+@yield('scripts')
 
 <!-- ace scripts -->
 <script src="{{URL('/')}}/js/ace-elements.min.js"></script>
@@ -638,13 +633,6 @@
 
 <!-- inline scripts related to this page -->
 
-<!-- the following scripts are used in demo only for onpage help and you don't need them -->
-<link rel="stylesheet" href="{{URL('/')}}/css/ace.onpage-help.css" />
-<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
-
-<script type="text/javascript"> ace.vars['base'] = '..'; </script>
-<script src="{{URL('/')}}/js/ace/elements.onpage-help.js"></script>
-<script src="{{URL('/')}}/js/ace/ace.onpage-help.js"></script>
-
+@yield('inline-scripts')
 </body>
 </html>

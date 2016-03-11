@@ -158,7 +158,7 @@
 														</span>
                                             </label>
                                             <div class="clearfix">
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+                                                <button type="button" onclick="mailFun()" class="width-35 pull-right btn btn-sm btn-danger">
                                                     <i class="ace-icon fa fa-lightbulb-o"></i>
                                                     <span class="bigger-110">发送!</span>
                                                 </button>
@@ -385,7 +385,7 @@
 <script>
 function mailFun(){
     $.ajax({
-        type:"post",
+        type:"get",
         data:$('#email_form').serialize(),
         url:"{{URL('account/mail_to')}}",
         success:function(data){

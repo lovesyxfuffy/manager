@@ -51,6 +51,7 @@ class AccountController extends Controller{
                 $tmp->identity=1;
             else if($identity=='企业')
                 $tmp->identity=2;
+            $tmp->emial=$email;
             $tmp->save();
             //写cookie session
             return 0;
@@ -77,7 +78,7 @@ class AccountController extends Controller{
         $username=$request->input("username");
         $result=DB::table('user')->where('username',$username)->where('email',$email);
         if($result->count()==1){
-            $password=$result->first(['password'])->password();
+            $password=$result->first(['password'])->password;
             $to = $email;
             $subject = "Test mail";
             $message ="傻逼 你的密码是$password";
@@ -87,4 +88,5 @@ class AccountController extends Controller{
             return new Response('0');
         }
     }
+
 }

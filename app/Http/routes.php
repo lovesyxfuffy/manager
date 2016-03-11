@@ -52,4 +52,5 @@ Route::group(['prefix'=>'account','middleware' => 'web'],function(){
    });
    Route::post('register/check','AccountController@register_check');
    Route::post('login','AccountController@login');
+   Route::get('mail_to','AccountController@mail_to');
 });
