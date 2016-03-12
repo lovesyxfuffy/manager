@@ -66,17 +66,17 @@
                                     <span class="title">发布项目</span>
                                 </li>
 
-                                <li data-target="#step2" class="">
+                                <li data-target="#step2" class="{{(isset($status) && ($status >= 0 || $status == -1))? "active" : ""}}">
                                     <span class="step">2</span>
                                     <span class="title">项目审核结果</span>
                                 </li>
 
-                                <li data-target="#step3" class="">
+                                <li data-target="#step3" class="{{(isset($status) && ($status >= 1))? "active" : ""}}">
                                     <span class="step">3</span>
                                     <span class="title">发布项目排期表</span>
                                 </li>
 
-                                <li data-target="#step4" class="">
+                                <li data-target="#step4" class="{{(isset($status) && ($status >= 2))? "active" : ""}}">
                                     <span class="step">4</span>
                                     <span class="title">等待排期表通过</span>
                                 </li>
@@ -180,9 +180,9 @@
 
                             </div>
 
-                            <div class="step-pane {{@$status == 0 ? "active" : ""}}" id="step2">
+                            <div class="step-pane {{(isset($status) && ($status == 0 || @$status == -1))? "active" : ""}}" id="step2">
                                 <div>
-                                    <div class="alert alert-success">
+                                    <div class="alert alert-success" style="display:none">
                                         <button type="button" class="close" data-dismiss="alert">
                                             <i class="ace-icon fa fa-times"></i>
                                         </button>
@@ -196,31 +196,31 @@
                                         <br>
                                     </div>
 
-                                    <div class="alert alert-danger">
+                                    <div class="alert alert-danger" style="{{isset($status) && $status == -1 ? "" : "display:none"}}">
                                         <button type="button" class="close" data-dismiss="alert">
                                             <i class="ace-icon fa fa-times"></i>
                                         </button>
 
                                         <strong>
                                             <i class="ace-icon fa fa-times"></i>
-                                            Oh snap!
+                                            提示!
                                         </strong>
 
-                                        Change a few things up and try submitting again.
+                                        您的项目未通过审核！
                                         <br>
                                     </div>
 
-                                    <div class="alert alert-warning">
-                                        <button type="button" class="close" data-dismiss="alert">
+                                    <div class="alert alert-warning" style="{{isset($status) && $status == 0 ? "" : "display:none"}}">
+                                        <button type="button" class="close" data-dismiss="alert" style="">
                                             <i class="ace-icon fa fa-times"></i>
                                         </button>
-                                        <strong>Warning!</strong>
+                                        <strong>提示!</strong>
 
-                                        Best check yo self, you're not looking too good.
+                                        您的项目正在审核阶段，请耐心等待！
                                         <br>
                                     </div>
 
-                                    <div class="alert alert-info">
+                                    <div class="alert alert-info" style="display:none">
                                         <button type="button" class="close" data-dismiss="alert">
                                             <i class="ace-icon fa fa-times"></i>
                                         </button>
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
 
-                            <div class="step-pane " id="step3">
+                            <div class="step-pane {{isset($status) && ($status == 1) ? "active" : "" }}" id="step3">
                                 <div class="center">
 
                                             <!-- PAGE CONTENT BEGINS -->
@@ -252,7 +252,7 @@
                                 </div>
                             </div>
 
-                            <div class="step-pane" id="step4">
+                            <div class="step-pane {{isset($status) && ($status == 2) ? "active" : ""}}" id="step4">
                                 <div class="center">
                                     <h3 class="green">Congrats!</h3>
                                     Your product is ready to ship! Click finish to continue!
@@ -438,16 +438,17 @@
         });
     </script>
     <script type="text/javascript">
+        var count = 1;
         @if(session('error'))
                 alert('{{session('error')}}');
         @endif
         var grid_data =
                 [
-                    {id:"1",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
-                    {id:"2",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
-                    {id:"3",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
-                    {id:"4",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
-                    {id:"5",name:"Desktop Computer",content:"note",plan_user:"Yes",start_time:"2007-12-03", end_time:"2007-12-03"},
+                        @if(isset($status) && $status == 1)
+                            @foreach($plans as $plan)
+                            {id:{{$plan->id}},name:"{{$plan->name}}",content:"{{$plan->content}}",plan_user:"{{$plan->username}}",start_time:"{{$plan->start_time}}", end_time:"{{$plan->end_time}}"},
+                            @endforeach
+                        @endif
                 ];
 
 
@@ -519,8 +520,7 @@
                         }
                     },
                     {name:'name',index:'name', width:60, sorttype:"int", editable: true},
-                    {name:'plan_user',index:'plan_user', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-
+                    {name:'plan_user',index:'plan_user', width:90, editable: true,edittype:"select", editoptions:{value:"{{@$value}}"}},//value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
                     {name:'start_time',index:'start_time',width:90, editable:true, sorttype:"date",unformat: pickDate},
                     {name:'end_time',index:'end_time',width:90, editable:true, sorttype:"date",unformat: pickDate},
                     {name:'content',index:'content', width:150,editable: true,edittype:"textarea",editoptions:{size:"40",maxlength:"60"}},
@@ -549,7 +549,7 @@
                     }, 0);
                 },
 
-                editurl: "/dummy.html",//nothing is saved
+                editurl: "{{url('/project/plan')}}",//nothing is saved
                 caption: "jqGrid with inline editing"
 
                 //,autowidth: true,

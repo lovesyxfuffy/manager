@@ -45,12 +45,13 @@ Route::group(['prefix'=>'post', 'middleware' => 'web'],function(){
     Route::get('/{id}', 'PostController@enter_post');
 
 });
-Route::group(['prefix'=>'project', 'middleware' => 'web'],function(){
+Route::group(['prefix'=>'project', 'middleware' => 'web-no-csrf'],function(){
 
     Route::get('/{id}', 'ProjectController@enter_project');
-    Route::post('/', [ /*'middleware'=>'check-login',*/ 'uses' => 'ProjectController@new_Project']);//发布帖子
-
+    Route::post('/', [ /*'middleware'=>'check-login',*/ 'uses' => 'ProjectController@new_Project']);//发布项目
+    Route::post('plan', [ /*'middleware'=>'check-login',*/ 'uses' => 'ProjectController@new_plan']);//添加排期
 });
+
 
 
 Route::group(['prefix'=>'account','middleware' => 'web'],function(){
