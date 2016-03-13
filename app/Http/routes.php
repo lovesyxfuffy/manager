@@ -62,3 +62,9 @@ Route::group(['prefix'=>'account','middleware' => 'web'],function(){
    Route::post('login','AccountController@login');
    Route::get('mail_to','AccountController@mail_to');
 });
+Route::group(['prefix'=>'examine','middleware'=>'web'],function(){
+    Route::get('/','ExamineController@view');
+    Route::post('get','ExamineController@get');
+    Route::post('reject','ExamineController@reject');
+    Route::post('accept','ExamineController@accept');
+});
