@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $status = $pjt[0]->status;
         if($status == 1)
         {
-            $members = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ?', [$id]);
+            $members = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=?', [$id,0]);
             $plans = DB::select('select  plans.id id, start_time, end_time, content, username, name from plans left join user on user_id = user.id where project_id = ?', [$id]);
             $values = '';
             foreach($members as $m)
