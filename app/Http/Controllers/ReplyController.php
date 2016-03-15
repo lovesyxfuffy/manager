@@ -23,8 +23,10 @@ class ReplyController extends Controller
 
     public function new_reply(Request $request)
     {
-        if(!($request->has('content') && $request->has('post_id')))
-            return 2;
+        $this->validate($request, [
+            'post_id' => 'required|numeric',
+            'content' => 'required',
+        ]);
 
         $post_id = $request->input('post_id');
         $reply = new Reply;

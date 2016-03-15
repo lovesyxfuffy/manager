@@ -66,17 +66,17 @@
                                     <span class="title">发布项目</span>
                                 </li>
 
-                                <li data-target="#step2" class="{{(isset($status) && ($status >= 0 || $status == -1))? "active" : ""}}">
+                                <li data-target="#step2" class="{{(isset($status) && ($status >= 0 || $status <= -1))? "active" : ""}}">
                                     <span class="step">2</span>
                                     <span class="title">项目审核结果</span>
                                 </li>
 
-                                <li data-target="#step3" class="{{(isset($status) && ($status >= 1))? "active" : ""}}">
+                                <li data-target="#step3" class="{{((isset($status) && ($status >= 1)) || $status <= -2)? "active" : ""}}">
                                     <span class="step">3</span>
                                     <span class="title">发布项目排期表</span>
                                 </li>
 
-                                <li data-target="#step4" class="{{(isset($status) && ($status >= 2))? "active" : ""}}">
+                                <li data-target="#step4" class="{{(isset($status) && ($status >= 2 || $status <= -2))? "active" : ""}}">
                                     <span class="step">4</span>
                                     <span class="title">等待排期表通过</span>
                                 </li>
@@ -84,13 +84,22 @@
 
                             <!-- /section:plugins/fuelux.wizard.steps -->
                         </div>
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <hr>
 
                         <!-- #section:plugins/fuelux.wizard.container -->
                         <div class="step-content pos-rel" id="step-container">
 
-                            <div class="step-pane {{!isset($status) ? "active" : ""}}" id="step1">
+                            <div class="step-pane {{(!isset($status)) ? "active" : ""}}" id="step1">
                                 <h3 class="lighter block green">填写项目信息</h3>
 
                                 <form class="form-horizontal" id="sample-form" action="{{url('project')}}" method="POST">
@@ -196,7 +205,7 @@
                                         <br>
                                     </div>
 
-                                    <div class="alert alert-danger" style="{{isset($status) && $status == -1 ? "" : "display:none"}}">
+                                    <div class="alert alert-danger" style="{{isset($status) && $status <= -1 ? "" : "display:none"}}">
                                         <button type="button" class="close" data-dismiss="alert">
                                             <i class="ace-icon fa fa-times"></i>
                                         </button>
@@ -250,12 +259,26 @@
 
 
                                 </div>
+                                你好
                             </div>
 
-                            <div class="step-pane {{isset($status) && ($status == 2) ? "active" : ""}}" id="step4">
-                                <div class="center">
-                                    <h3 class="green">Congrats!</h3>
-                                    Your product is ready to ship! Click finish to continue!
+                            <div class="step-pane {{isset($status) && (($status == 2) || $status == -2)? "active" : ""}}" id="step4">
+                                <div class="center" style="{{isset($status) && $status >= 2 ? "" : "display:none"}}">
+                                    <h3 class="green">恭喜！!</h3>
+                                    您的排期已经通过审核！
+                                </div>
+                                <div class="alert alert-danger" style="{{isset($status) && $status <= -2 ? "" : "display:none"}}">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <i class="ace-icon fa fa-times"></i>
+                                    </button>
+
+                                    <strong>
+                                        <i class="ace-icon fa fa-times"></i>
+                                        提示!
+                                    </strong>
+
+                                    您的排期未通过审核！
+                                    <br>
                                 </div>
                             </div>
                         </div>
@@ -446,7 +469,7 @@
                 [
                         @if(isset($status) && $status == 1)
                             @foreach($plans as $plan)
-                            {id:{{$plan->id}},name:"{{$plan->name}}",content:"{{$plan->content}}",plan_user:"{{$plan->username}}",start_time:"{{$plan->start_time}}", end_time:"{{$plan->end_time}}"},
+                            {id:'{{$plan->id}}',name:"{{$plan->name}}",content:"{{$plan->content}}",plan_user:"{{$plan->username}}",start_time:"{{$plan->start_time}}", end_time:"{{$plan->end_time}}"},
                             @endforeach
                         @endif
                 ];

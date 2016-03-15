@@ -25,21 +25,29 @@ class ProjectController extends Controller
         $status = $pjt[0]->status;
         if($status == 1)
         {
+            $applies = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=-1', [$id]);
             $members = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=?', [$id,0]);
             $plans = DB::select('select  plans.id id, start_time, end_time, content, username, name from plans left join user on user_id = user.id where project_id = ?', [$id]);
             $values = '';
             foreach($members as $m)
                 $values .= $m->user_id.':'.$m->username.";";
             $values = substr($values, 0, -1);
-            return view('publish', ['status' => $status, 'plans' => $plans, 'value' => $values]);
+            return view('publish', ['status' => $status, 'plans' => $plans, 'value' => $values, 'applies' => $applies]);
         }
         return view('publish', ['status' => $status]);
     }
 
     public function new_project(Request $request)
     {
-        if(!($request->has('pjt_type') && $request->has('pjt_name') && $request->has('pjt_info') && $request->has('pjt_reward') && $request->has('pjt_memberNum') && $request->has('pjt_startTime') && $request->has('pjt_endTime')) )
-            return redirect('show/publish')->with('error', '表单信息有误');//
+        $this->validate($request, [
+            'pjt_type' => 'required|numeric',
+            'pjt_name' => 'required',
+            'pjt_info' => 'required',
+            'pjt_reward' => 'required|numeric',
+            'pjt_memberNum' => 'required|numeric',
+            'pjt_startTime' => 'required|date',
+            'pjt_endTime' => 'required|date'
+        ]);
         //添加新的project记录
         $pjt = new Project;
         $pjt->name = $request->input('pjt_name');

@@ -25,10 +25,11 @@ class PostController extends Controller
      */
     public function new_post(Request $request)
     {
-        if(!($request->has('title') && $request->has('content')))
-        {
-            return view('post/all', ['error' => '表单信息有误']);
-        }
+        $this->validate($request, [
+            'title' => 'required|max:200',
+            'content' => 'required',
+        ]);
+
 
         //添加新的post记录
         $post = new Post;
