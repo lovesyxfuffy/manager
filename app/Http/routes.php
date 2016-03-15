@@ -45,7 +45,7 @@ Route::group(['prefix'=>'post', 'middleware' => 'web'],function(){
     Route::get('/{id}', 'PostController@enter_post');
 
 });
-Route::group(['prefix'=>'project', 'middleware' => 'web-no-csrf'],function(){
+Route::group(['prefix'=>'publish', 'middleware' => 'web-no-csrf'],function(){
 
     Route::get('/{id}', 'ProjectController@enter_project');
     Route::post('/', [ /*'middleware'=>'check-login',*/ 'uses' => 'ProjectController@new_Project']);//发布项目
@@ -67,4 +67,8 @@ Route::group(['prefix'=>'examine','middleware'=>'web'],function(){
     Route::post('get','ExamineController@get');
     Route::post('reject','ExamineController@reject');
     Route::post('accept','ExamineController@accept');
+});
+Route::group(['prefix'=>'project','middleware'=>['web','check-login']],function(){
+    Route::get('/','ManagerController@view');
+    Route::post('join','ManagerController@join');
 });

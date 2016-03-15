@@ -9,7 +9,14 @@
 @stop
 
 @section('list')
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">项目管理</a>
+        </li>
 
+        <li class="active">发布项目</li>
+    </ul>
 @stop
 
 @section('content')

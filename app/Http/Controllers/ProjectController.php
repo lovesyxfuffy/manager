@@ -7,12 +7,12 @@
  */
 namespace App\Http\Controllers;
 use DB;
-use App\User;
-use App\Project;
-use App\Plan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\User;
+use App\Project;
+use App\Plan;
 
 class ProjectController extends Controller
 {
@@ -21,7 +21,7 @@ class ProjectController extends Controller
         session(['pjt_id'=>$id]);
         $pjt = DB::select('select status from project where id = ?', [$id]);
         if(count($pjt) <= 0)
-            return view('publish');
+            return view('publish',['status' => 1]);
         $status = $pjt[0]->status;
         if($status == 1)
         {
@@ -39,7 +39,7 @@ class ProjectController extends Controller
     public function new_project(Request $request)
     {
         if(!($request->has('pjt_type') && $request->has('pjt_name') && $request->has('pjt_info') && $request->has('pjt_reward') && $request->has('pjt_memberNum') && $request->has('pjt_startTime') && $request->has('pjt_endTime')) )
-            return redirect('show/publish')->with('error', '表单信息有误');
+            return redirect('show/publish')->with('error', '表单信息有误');//
         //添加新的project记录
         $pjt = new Project;
         $pjt->name = $request->input('pjt_name');
@@ -49,6 +49,7 @@ class ProjectController extends Controller
         $pjt->status = 0;
         $pjt->starttime = $request->input('pjt_startTime');
         $pjt->endtime = $request->input('pjt_endTime');
+
         $pjt->save();
 
         return redirect('project/'.$pjt->id);
