@@ -192,7 +192,14 @@
                                 </td>
                             @endif
 
-                            <td><a href="#">{{$mp->message}}</a></td>
+                            <td>
+                                @if($mp->owner_id==session('user_id'))
+                                <a href="#">{{$mp->message}}</a>
+                                @else
+                                    {{$mp->message}}
+                                @endif
+
+                            </td>
                     </tr>
                     @endforeach
                     </tbody>

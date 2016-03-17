@@ -31,10 +31,10 @@ class ManagerController extends Controller{
         $button=array('danger','warning','primary','success','grey');
         $my_projects=DB::table('project')->join('project_user',function($join){
             $join->on('project.id','=','project_user.project_id');
-        })->where('project_user.user_id','=',$user_id)->orwhere('project.owner_id','=',$user_id)->get(['project.status','member_num','name','id']);
+        })->where('project_user.user_id','=',$user_id)->orwhere('project.owner_id','=',$user_id)->get(['project.status','member_num','name','id','owner_id']);
         foreach($my_projects as $mp){
             if($mp->status==1){
-                $mp->message="有".DB::table('project_user')->where('status',-1)->count()."条加入项目申请";
+                $mp->message="有".DB::table('project_user')->where('project_id',$mp->id)->where('status',-1)->count()."条加入项目申请";
                 $mp->percent=DB::table('project_user')->where('status',0)->count()/($mp->member_num-1);
             }
             else if($mp->status==4){
@@ -54,5 +54,8 @@ class ManagerController extends Controller{
         $project_id=$request->input('project_id');
         DB::table('project_user')->insert(['user_id'=>session('user_id'),'project_id'=>$project_id,'status'=>'-1']);
         return 0;
+    }
+    function content_view(Request $request){
+
     }
 }

@@ -71,4 +71,5 @@ Route::group(['prefix'=>'examine','middleware'=>'web'],function(){
 Route::group(['prefix'=>'project','middleware'=>['web','check-login']],function(){
     Route::get('/','ManagerController@view');
     Route::post('join','ManagerController@join');
+    Route::get('content/{id}','ManagerController@content_view');
 });
