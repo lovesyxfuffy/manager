@@ -82,6 +82,15 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="container" style="width:100%;">
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <form id="question" method="POST" role="form" style="margin-left:30px;margin-right:20px;margin-top:20px;" action="{{url('post')}}">
                                     <div class="form-group">
                                         <label for="title" class="sr-only">标题</label>
