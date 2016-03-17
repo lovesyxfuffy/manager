@@ -16,12 +16,14 @@ class ManagerController extends Controller{
         $user_id=session('user_id');
         $result=DB::table('project')->join('user',function($join){
             $join->on('user.id','=','project.owner_id');
-        })->where('status','=','1')->where('owner_id','<>',$user_id)->get();
+        })->where('status','=','1')->where('owner_id','<>',$user_id)->get(['user.id as user_id','project.id as id','content','starttime','endtime','attribute','username','name','reward']);
 
         $length=count($result);
         for($i=0;$i<$length;$i++){
             $project_id=$result[$i]->id;
+
             if(DB::table('project_user')->where('project_id',$project_id)->where('user_id',$user_id)->count()!=0){
+
                 unset($result[$i]);
             }
         }
@@ -45,6 +47,7 @@ class ManagerController extends Controller{
                 $mp->message="无新消息";
             }
         }
+        //return var_dump($result);
         return view('projects')->with('projects',$result)->with('color',$color)->with('button',$button)->with('my_projects',$my_projects);
     }
     function join(Request $request){

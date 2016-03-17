@@ -23,6 +23,7 @@ class CheckLogin{
                     session(['user_id' => $id]);
                     return $next($request);
                 } else
+
                     return redirect('account/login');
             }
             else{
