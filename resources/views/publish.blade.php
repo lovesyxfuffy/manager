@@ -66,17 +66,17 @@
                                     <span class="title">发布项目</span>
                                 </li>
 
-                                <li data-target="#step2" class="{{(isset($status) && ($status >= 0 || $status <= -1))? "active" : ""}}">
+                                <li data-target="#step2" class="{{isset($status) ? "active" : ""}}">
                                     <span class="step">2</span>
                                     <span class="title">项目审核结果</span>
                                 </li>
 
-                                <li data-target="#step3" class="{{((isset($status) && ($status >= 1)) || $status <= -2)? "active" : ""}}">
+                                <li data-target="#step3" class="{{((isset($status) && (($status >= 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1) || $status <= -2))) ? "active" : ""}}">
                                     <span class="step">3</span>
                                     <span class="title">发布项目排期表</span>
                                 </li>
 
-                                <li data-target="#step4" class="{{(isset($status) && ($status >= 2 || $status <= -2))? "active" : ""}}">
+                                <li data-target="#step4" class="{{(isset($status) && ($status >= 2 || $status <= -2)) ? "active" : ""}}">
                                     <span class="step">4</span>
                                     <span class="title">等待排期表通过</span>
                                 </li>
@@ -102,7 +102,7 @@
                             <div class="step-pane {{(!isset($status)) ? "active" : ""}}" id="step1">
                                 <h3 class="lighter block green">填写项目信息</h3>
 
-                                <form class="form-horizontal" id="sample-form" action="{{url('project')}}" method="POST">
+                                <form class="form-horizontal" id="sample-form" action="{{url('publish')}}" method="POST">
                                     <!-- #section:elements.form.input-state -->
                                     {{ csrf_field() }}
 
@@ -189,7 +189,7 @@
 
                             </div>
 
-                            <div class="step-pane {{(isset($status) && ($status == 0 || @$status == -1))? "active" : ""}}" id="step2">
+                            <div class="step-pane {{(isset($status) && ($status == 0 || $status == -1 || $status == 1))? "active" : ""}}" id="step2">
                                 <div>
                                     <div class="alert alert-success" style="display:none">
                                         <button type="button" class="close" data-dismiss="alert">
@@ -229,6 +229,47 @@
                                         <br>
                                     </div>
 
+                                    <div class="alert alert-success" style="{{(isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)) ? "" : "display:none"}}">
+                                        <button type="button" class="close" data-dismiss="alert" style="">
+                                            <i class="ace-icon fa fa-times"></i>
+                                        </button>
+                                        <strong>提示!</strong>
+
+                                        您的项目审核通过，目前正在召集队友!
+                                        <br>
+                                    </div>
+
+                                    @if(isset($applies) &&  (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)) && isset($members))
+                                        @foreach($members as $m)
+                                            <div class="alert alert-success">
+
+
+                                                <strong>
+                                                    <i class="ace-icon fa fa-check"></i>
+                                                    {{$m->username}}已经加入！
+                                                </strong>
+
+                                                <br>
+                                            </div>
+                                        @endforeach
+
+                                    @endif
+                                    @if(isset($applies) &&  (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)))
+                                        @foreach($applies as $apply)
+                                            <div class="alert alert-warning">
+
+                                                <strong>
+                                                    <i class="ace-icon fa fa-check"></i>
+                                                    {{$apply->username}}希望加入！
+                                                </strong>
+                                                <button onclick="accept({{$apply->user_id}})">同意</button>
+                                                <button onclick="reject({{$apply->user_id}})">拒绝</button>
+
+                                                <br>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
                                     <div class="alert alert-info" style="display:none">
                                         <button type="button" class="close" data-dismiss="alert">
                                             <i class="ace-icon fa fa-times"></i>
@@ -241,7 +282,7 @@
                                 </div>
                             </div>
 
-                            <div class="step-pane {{isset($status) && ($status == 1) ? "active" : "" }}" id="step3">
+                            <div class="step-pane {{isset($status) && ($status == 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1) ? "active" : "" }}" id="step3">
                                 <div class="center">
 
                                             <!-- PAGE CONTENT BEGINS -->
@@ -259,7 +300,7 @@
 
 
                                 </div>
-                                你好
+
                             </div>
 
                             <div class="step-pane {{isset($status) && (($status == 2) || $status == -2)? "active" : ""}}" id="step4">
@@ -411,6 +452,52 @@
 @stop
 @section('inline-scripts')
     <script>
+        function accept(id)
+        {
+            $.ajax(
+            {
+                url: '{{url('publish/accept')}}',
+                type: 'POST',
+                data: {
+                    project_id: '{{isset($pjt_id) ? $pjt_id : ''}}',
+                    user_id: id,
+                    _token: "<?php echo csrf_token(); ?>"
+                },
+                success: function(data){
+                    if(data == 0)
+                    {
+                        alert('添加成功!');
+                        window.location.reload();
+                    }
+                    else
+                        alert('添加失败');
+                }
+            });
+        }
+        function reject(id)
+        {
+            $.ajax(
+                    {
+                        url: '{{url('publish/reject')}}',
+                        type: 'POST',
+                        data: {
+                            project_id: '{{isset($pjt_id) ? $pjt_id : ''}}',
+                            user_id: id,
+                            _token: "<?php echo csrf_token(); ?>"
+                        },
+                        success: function(data){
+                            if(data == 0)
+                            {
+                                alert('拒绝成功!');
+                                window.location.reload();
+                            }
+                            else
+                                alert('出了点问题');
+                        }
+                    });
+        }
+
+
         $('.chosen-select').chosen({allow_single_deselect:true});
         //resize the chosen on window resize
 
@@ -467,7 +554,7 @@
         @endif
         var grid_data =
                 [
-                        @if(isset($status) && $status == 1)
+                        @if(isset($status) && $status == 1 && isset($plans))
                             @foreach($plans as $plan)
                             {id:'{{$plan->id}}',name:"{{$plan->name}}",content:"{{$plan->content}}",plan_user:"{{$plan->username}}",start_time:"{{$plan->start_time}}", end_time:"{{$plan->end_time}}"},
                             @endforeach

@@ -21,18 +21,19 @@ class ProjectController extends Controller
         session(['pjt_id'=>$id]);
         $pjt = DB::select('select status from project where id = ?', [$id]);
         if(count($pjt) <= 0)
-            return view('publish',['status' => 1]);
+            return view('publish');
         $status = $pjt[0]->status;
         if($status == 1)
         {
             $applies = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=-1', [$id]);
             $members = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=?', [$id,0]);
             $plans = DB::select('select  plans.id id, start_time, end_time, content, username, name from plans left join user on user_id = user.id where project_id = ?', [$id]);
+            $expectNum = DB::select('select member_num from project where id = ?', [$id])[0]->member_num;
             $values = '';
             foreach($members as $m)
                 $values .= $m->user_id.':'.$m->username.";";
             $values = substr($values, 0, -1);
-            return view('publish', ['status' => $status, 'plans' => $plans, 'value' => $values, 'applies' => $applies]);
+            return view('publish', ['status' => $status, 'plans' => $plans, 'value' => $values, 'members' => $members, 'totalNum' => $expectNum, 'nowNum' => count($members), 'applies' => $applies, 'pjt_id' => $id]);
         }
         return view('publish', ['status' => $status]);
     }
@@ -94,5 +95,26 @@ class ProjectController extends Controller
                 DB::delete('delete from plans where id = ?', [$i]);
             return Response("OK", 200);
         }
+        return Response("表单信息错误", 400);
+    }
+
+    public function accept(Request $request)
+    {
+        $this->validate($request, [
+            'project_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+        ]);
+        DB::update('update project_user set status = 0 where project_id = ? and user_id = ?', [$request->input('project_id'), $request->input('user_id')]);
+        return 0;
+    }
+
+    public function reject(Request $request)
+    {
+        $this->validate($request, [
+            'project_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+        ]);
+        DB::delete('delete from project_user where project_id = ? and user_id = ?', [$request->input('project_id'), $request->input('user_id')]);
+        return 0;
     }
 }
