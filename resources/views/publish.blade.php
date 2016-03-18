@@ -95,8 +95,8 @@
 
                         <!-- #section:plugins/fuelux.wizard.container -->
                         <div class="step-content pos-rel" id="step-container">
-
-                            <div class="step-pane {{(!isset($status)) ? "active" : ""}}" id="step1">
+                            @if(!isset($status))
+                                <div class="step-pane active" id="step1">
                                 <h3 class="lighter block green">填写项目信息</h3>
 
                                 <form class="form-horizontal" id="sample-form" action="{{url('publish')}}" method="POST">
@@ -185,13 +185,12 @@
 
 
                             </div>
+                            @endif
 
-                            <div class="step-pane {{(isset($status) && ($status == 0 || $status == -1 || $status == 1))? "active" : ""}}" id="step2">
+                            @if((isset($status) && ($status == 0 || $status == -1 || $status == 1)))
+                                <div class="step-pane active" id="step2">
                                 <div>
                                     <div class="alert alert-success" style="display:none">
-                                        <button type="button" class="close" data-dismiss="alert">
-                                            <i class="ace-icon fa fa-times"></i>
-                                        </button>
 
                                         <strong>
                                             <i class="ace-icon fa fa-check"></i>
@@ -203,9 +202,6 @@
                                     </div>
 
                                     <div class="alert alert-danger" style="{{isset($status) && $status <= -1 ? "" : "display:none"}}">
-                                        <button type="button" class="close" data-dismiss="alert">
-                                            <i class="ace-icon fa fa-times"></i>
-                                        </button>
 
                                         <strong>
                                             <i class="ace-icon fa fa-times"></i>
@@ -217,29 +213,31 @@
                                     </div>
 
                                     <div class="alert alert-warning" style="{{isset($status) && $status == 0 ? "" : "display:none"}}">
-                                        <button type="button" class="close" data-dismiss="alert" style="">
-                                            <i class="ace-icon fa fa-times"></i>
-                                        </button>
-                                        <strong>提示!</strong>
+                                        <strong>提示！您的项目正在审核阶段，请耐心等待！</strong>
 
-                                        您的项目正在审核阶段，请耐心等待！
+
                                         <br>
                                     </div>
 
                                     <div class="alert alert-success" style="{{(isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)) ? "" : "display:none"}}">
-                                        <button type="button" class="close" data-dismiss="alert" style="">
-                                            <i class="ace-icon fa fa-times"></i>
-                                        </button>
-                                        <strong>提示!</strong>
 
-                                        您的项目审核通过，目前正在召集队友!
+                                        <strong>提示！您的项目审核通过，目前正在召集队友!</strong>
                                         <br>
                                     </div>
 
+                                    @if( (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum)))
+                                        <div class="alert alert-success">
+                                            <strong>
+                                                共需招募人数: {{$totalNum}} <br />
+                                                当前人数: {{$nowNum}}
+                                            </strong>
+
+                                            <br>
+                                        </div>
+                                    @endif
                                     @if(isset($applies) &&  (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)) && isset($members))
                                         @foreach($members as $m)
                                             <div class="alert alert-success">
-
 
                                                 <strong>
                                                     <i class="ace-icon fa fa-check"></i>
@@ -254,14 +252,12 @@
                                     @if(isset($applies) &&  (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum) && $totalNum > ($nowNum+1)))
                                         @foreach($applies as $apply)
                                             <div class="alert alert-warning">
-
                                                 <strong>
                                                     <i class="ace-icon fa fa-check"></i>
-                                                    {{$apply->username}}希望加入！
+                                                    {{$apply->username}}申请加入！
                                                 </strong>
                                                 <button onclick="accept({{$apply->user_id}})">同意</button>
                                                 <button onclick="reject({{$apply->user_id}})">拒绝</button>
-
                                                 <br>
                                             </div>
                                         @endforeach
@@ -278,8 +274,10 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
 
-                            <div class="step-pane {{isset($status) && ($status == 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1) ? "active" : "" }}" id="step3">
+                            @if(isset($status) && ($status == 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1))
+                                <div class="step-pane active" id="step3">
                                 <div class="center">
 
                                             <!-- PAGE CONTENT BEGINS -->
@@ -299,8 +297,10 @@
                                 </div>
 
                             </div>
+                            @endif
 
-                            <div class="step-pane {{isset($status) && (($status == 2) || $status == -2 || $status == 3) ? "active" : ""}}" id="step4">
+                            @if(isset($status) && (($status == 2) || $status == -2 || $status == 3))
+                                <div class="step-pane active" id="step4">
                                 <div class="center" style="{{isset($status) && $status >= 3 ? "" : "display:none"}}">
                                     <h3 class="green">恭喜！!</h3>
                                     您的排期已经通过审核！
@@ -332,6 +332,8 @@
                                     <br>
                                 </div>
                             </div>
+                            @endif
+
                         </div>
 
                         <!-- /section:plugins/fuelux.wizard.container -->
