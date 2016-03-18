@@ -32,10 +32,7 @@
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
-            <h4 class="lighter">
-                <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-                <a href="#modal-wizard" data-toggle="modal" class="pink"> 项目发布进度</a>
-            </h4>
+
 
             <div class="hr hr-18 hr-double dotted"></div>
 
@@ -71,7 +68,7 @@
                                     <span class="title">项目审核结果</span>
                                 </li>
 
-                                <li data-target="#step3" class="{{((isset($status) && (($status >= 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1) || $status <= -2))) ? "active" : ""}}">
+                                <li data-target="#step3" class="{{((isset($status) && (($status >= 1) && isset($totalNum) && isset($nowNum) && $totalNum <= ($nowNum+1) || $status <= -2 || $status >= 2))) ? "active" : ""}}">
                                     <span class="step">3</span>
                                     <span class="title">发布项目排期表</span>
                                 </li>
@@ -297,16 +294,29 @@
                                             </script>
 
                                             <!-- PAGE CONTENT ENDS -->
-
+                                <button onclick="submit_plan()">提交排期</button>
 
                                 </div>
 
                             </div>
 
-                            <div class="step-pane {{isset($status) && (($status == 2) || $status == -2)? "active" : ""}}" id="step4">
-                                <div class="center" style="{{isset($status) && $status >= 2 ? "" : "display:none"}}">
+                            <div class="step-pane {{isset($status) && (($status == 2) || $status == -2 || $status == 3) ? "active" : ""}}" id="step4">
+                                <div class="center" style="{{isset($status) && $status >= 3 ? "" : "display:none"}}">
                                     <h3 class="green">恭喜！!</h3>
                                     您的排期已经通过审核！
+                                </div>
+                                <div class="alert alert-warning" style="{{isset($status) && $status == 2 ? "" : "display:none"}}">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <i class="ace-icon fa fa-times"></i>
+                                    </button>
+
+                                    <strong>
+                                        <i class="ace-icon fa fa-times"></i>
+                                        提示!
+                                    </strong>
+
+                                    排期正在审核中!
+                                    <br>
                                 </div>
                                 <div class="alert alert-danger" style="{{isset($status) && $status <= -2 ? "" : "display:none"}}">
                                     <button type="button" class="close" data-dismiss="alert">
@@ -496,6 +506,27 @@
                         }
                     });
         }
+        function submit_plan()
+        {
+            $.ajax(
+                    {
+                        url: '{{url('publish/submit_plan')}}',
+                        type: 'POST',
+                        data: {
+                            project_id: '{{isset($pjt_id) ? $pjt_id : ''}}',
+                            _token: "<?php echo csrf_token(); ?>"
+                        },
+                        success: function(data){
+                            if(data == 0)
+                            {
+                                alert('提交成功!');
+                                window.location.reload();
+                            }
+                            else
+                                alert('出了点问题');
+                        }
+                    });
+        }
 
 
         $('.chosen-select').chosen({allow_single_deselect:true});
@@ -659,7 +690,7 @@
                     }, 0);
                 },
 
-                editurl: "{{url('/project/plan')}}",//nothing is saved
+                editurl: "{{url('/publish/plan')}}",//nothing is saved
                 caption: "jqGrid with inline editing"
 
                 //,autowidth: true,

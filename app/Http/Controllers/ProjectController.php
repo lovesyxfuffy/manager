@@ -55,13 +55,15 @@ class ProjectController extends Controller
         $pjt->content = $request->input('pjt_info');
         $pjt->attribute = $request->input('pjt_type');
         $pjt->reward = $request->input('pjt_reward');
+        $pjt->member_num = $request->input('pjt_memberNum');
+        $pjt->owner_id = $request->session()->get('user_id');
         $pjt->status = 0;
         $pjt->starttime = $request->input('pjt_startTime');
         $pjt->endtime = $request->input('pjt_endTime');
 
         $pjt->save();
 
-        return redirect('project/'.$pjt->id);
+        return redirect('pubilsh/'.$pjt->id);
     }
 
     public function new_plan(Request $request)
@@ -117,4 +119,14 @@ class ProjectController extends Controller
         DB::delete('delete from project_user where project_id = ? and user_id = ?', [$request->input('project_id'), $request->input('user_id')]);
         return 0;
     }
+
+    public function submit_plan(Request $request)
+    {
+        $this->validate($request, [
+            'project_id' => 'required|numeric',
+        ]);
+        DB::update('update project set status = 2 where id = ?', [$request->input('project_id')]);
+        return 0;
+    }
+
 }

@@ -12,10 +12,10 @@
     <div class="row">
         <div class="col-xs-12 col-md-9 main">
             <ul class="nav nav-tabs nav-tabs-zen mb10 mt30">
-                <li class="active"><a href="/questions">最新的</a>
+                <li class="active"><a href="/questions">所有帖子</a>
                 </li>
-                <li><a href="/questions/hottest">热门的</a></li>
-                <li><a href="/questions/unanswered">未回答的</a></li>
+                <!--li><a href="/questions/hottest">热门的</a></--li>
+                <li><a href="/questions/unanswered">未回答的</a></li-->
             </ul>
 
             <div class="stream-list question-stream" style="min-height:550px;">
@@ -36,7 +36,7 @@
                                     <a href="/u/wojiujiaotudou">{{$post->username}}</a>
                                     <span class="split"></span>
                                     <span style="display:none">{{$min = ceil((time()-strtotime($post->modify_time))/60)}}</span>
-                                    <a href="/q/1010000004518087" class="askDate" data-created="1456821997">
+                                    <span href="/q/1010000004518087" class="askDate" data-created="1456821997">
                                         @if($min < 60)
                                             {{$min."分钟"}}
                                         @elseif($min < 1440)
@@ -44,12 +44,12 @@
                                         @else
                                             {{(ceil($min/60/24))."天"}}
                                         @endif
-                                        前发帖</a>
+                                        前发帖</span>
                                 </li>
                             </ul>
                             <h2 class="title"><a href="{{url('/')}}/post/{{$post->id}}">{{$post->title}}</a></h2>
-                            <ul class="taglist--inline ib">
-                                <li class="tagPopup"><a class="tag tag-sm" href="/t/%E9%98%BF%E9%87%8C%E4%BA%91" data-toggle="popover" data-original-title="阿里云" data-id="1040000000126687">阿里云</a></li><li class="tagPopup"><a class="tag tag-sm" href="/t/svn" data-toggle="popover" data-original-title="svn" data-id="1040000000089447">svn</a></li>            </ul>
+                            <!--ul class="taglist--inline ib">
+                                <li class="tagPopup"><a class="tag tag-sm" href="/t/%E9%98%BF%E9%87%8C%E4%BA%91" data-toggle="popover" data-original-title="阿里云" data-id="1040000000126687">阿里云</a></li><li class="tagPopup"><a class="tag tag-sm" href="/t/svn" data-toggle="popover" data-original-title="svn" data-id="1040000000089447">svn</a></li>            </ul-->
                         </div>
                     </section>
                 @endforeach
@@ -76,7 +76,7 @@
         </div><!-- /.main -->
         <div class="col-xs-12 col-md-3 side mt30">
             <div class="side-ask alert alert-warning">
-                <p>今天，你编程时遇到了什么问题呢？</p>
+                <!--p>今天，你编程时遇到了什么问题呢？</p-->
                 <a href="/ask" class="mt10 btn btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-lg">提问</a>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                     <div class="modal-dialog modal-lg">
@@ -128,9 +128,9 @@
                 </div>
 
 
-                <div class="mt10 side-system-notice">
+                <!--div class="mt10 side-system-notice">
                     <i class="fa fa-bullhorn pull-left"></i><a class="side-system-notice--title" href="https://segmentfault.com/a/1190000004509593#notify">来跟大家分享下你的编程之路吧！</a>
-                </div>
+                </div-->
             </div>
 
 
