@@ -228,7 +228,7 @@
                                     @if( (isset($status) && $status == 1  && isset($totalNum) && isset($nowNum)))
                                         <div class="alert alert-success">
                                             <strong>
-                                                共需招募人数: {{$totalNum}} <br />
+                                                共需招募人数: {{($totalNum-1)}} <br />
                                                 当前人数: {{$nowNum}}
                                             </strong>
 
@@ -306,9 +306,7 @@
                                     您的排期已经通过审核！
                                 </div>
                                 <div class="alert alert-warning" style="{{isset($status) && $status == 2 ? "" : "display:none"}}">
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <i class="ace-icon fa fa-times"></i>
-                                    </button>
+
 
                                     <strong>
                                         <i class="ace-icon fa fa-times"></i>
@@ -746,11 +744,11 @@
                         addicon : 'ace-icon fa fa-plus-circle purple',
                         del: true,
                         delicon : 'ace-icon fa fa-trash-o red',
-                        search: true,
+                        search: false,
                         searchicon : 'ace-icon fa fa-search orange',
-                        refresh: true,
+                        refresh: false,
                         refreshicon : 'ace-icon fa fa-refresh green',
-                        view: true,
+                        view: false,
                         viewicon : 'ace-icon fa fa-search-plus grey',
                     },
                     {

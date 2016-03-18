@@ -69,10 +69,10 @@ class ProjectController extends Controller
     public function new_plan(Request $request)
     {
 
-            if(!$request->has('oper'))
-                return Response("表单信息错误", 400);
+        if(!$request->has('oper'))
+            return Response("表单信息错误", 400);
             //此处应添加验证是否为本人修改
-        if($request->input('oper') == 'add' || 'edit')
+        if($request->input('oper') == 'add' || $request->input('oper') == 'edit')
         {
             if(!($request->has('name') && $request->has('plan_user') && $request->has('start_time') && $request->has('end_time') && $request->has('content')) )
                 return Response("表单信息错误", 400);
