@@ -99,6 +99,7 @@ class PostController extends Controller
             $post_id = $request->input('post_id');*/
         $post_id = $id;
         $post = DB::select('select title, username from posts left join user on user.id = author_id where posts.id = ?', [$post_id]);
+
         $replies = DB::select('select type, author_id, post_time, content, username from replies left join user on user.id = author_id where post_id = ?', [$post_id]);
         DB::update('update posts set click_num = click_num+1 where id = ?', [$post_id]);
         return view('reply', ['replies' => $replies, "post_id" => $post_id, 'post' => $post[0]]);

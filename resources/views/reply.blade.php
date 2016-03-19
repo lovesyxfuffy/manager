@@ -43,7 +43,7 @@
             <div class="author">
 
                 <div class="question__author">
-                    <a href="/u/joeny" class="mr5"><strong>{{$post->username}}</strong></a>
+                    <a href="#" class="mr5"><strong>{{$post->username}}</strong></a>
                         <span class="hidden-xs"></span>
                 </div>
             </div>
@@ -198,11 +198,11 @@
                             </div>
 
                             <div class="col-md-2 col-sm-2 col-xs-2 answer__info--author-avatar">
-                                <a class="mr10" href="/u/august1996"><img class="avatar-32" src="https://sfault-avatar.b0.upaiyun.com/379/989/3799891567-565fa729f1bc6_big64" alt=""></a>
+                                <a class="mr10" href="#"><img class="avatar-32" src="https://sfault-avatar.b0.upaiyun.com/379/989/3799891567-565fa729f1bc6_big64" alt=""></a>
                             </div>
                             <div class="col-md-2 col-sm-2 hidden-xs answer__info--author">
                                 <div class=" answer__info--author-warp">
-                                    <a class="answer__info--author-name" title="august1996" href="/u/august1996">{{$reply->username}}</a><!--span class="answer__info--author-rank">18 声望</span--></div>
+                                    <a class="answer__info--author-name" title="august1996" href="#">{{$reply->username}}</a><!--span class="answer__info--author-rank">18 声望</span--></div>
                             </div>
                         </div>
 
@@ -265,7 +265,7 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="post_id" value="{{$post_id}}">
                     <div class="editor" id="questionText">
-                        <textarea id="reply_content" name="content" class="form-control" rows="15" placeholder="撰写答案..."></textarea>
+                        <textarea id="reply_content" name="content" class="form-control" rows="15" placeholder="回复内容..."></textarea>
                     </div>
 
                     <input type="submit" onclick="post" class="btn btn-default btn-sm inviteBtn ml5" style="float:right;" />
