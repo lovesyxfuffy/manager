@@ -47,7 +47,7 @@ Route::group(['prefix'=>'post', 'middleware' => 'web'],function(){
 });
 Route::group(['prefix'=>'publish', 'middleware' => 'web-no-csrf', 'check-login'],function(){
 
-    Route::get('/{id}', 'ProjectController@enter_project');
+    Route::get('/{id}', 'ProjectController@enter_project');//发布界面
     Route::get('/', function()
     {
         return view('publish');
@@ -71,14 +71,14 @@ Route::group(['prefix'=>'account','middleware' => 'web'],function(){
    Route::get('mail_to','AccountController@mail_to');
 });
 Route::group(['prefix'=>'examine','middleware'=>'web'],function(){
-    Route::get('/','ExamineController@view');
+    Route::get('/','ExamineController@view');//审核项目
     Route::post('get','ExamineController@get');
     Route::post('reject','ExamineController@reject');
     Route::post('accept','ExamineController@accept');
 });
 Route::group(['prefix'=>'project','middleware'=>['web', 'check-login']],function(){
-    Route::get('/','ManagerController@view');
+    Route::get('/','ManagerController@view');//项目管理
     Route::post('join','ManagerController@join');
-    Route::get('content/{id}','ManagerController@content_view');
+    Route::get('content/{id}','ManagerController@content_view');//单个项目详情
     Route::post('plan/{sign}','ManagerController@plan');
 });
