@@ -23,7 +23,7 @@
 
     <div class="page-header">
         <h1>
-            带审核的项目发布消息
+            待审核的项目发布消息
         </h1>
     </div><!-- /.page-header -->
 

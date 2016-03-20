@@ -21,7 +21,7 @@ class ProjectController extends Controller
         session(['pjt_id'=>$id]);
         $pjt = DB::select('select status from project where id = ?', [$id]);
         if(count($pjt) <= 0)
-            return view('publish');
+            return abort(404);
         $status = $pjt[0]->status;
         if($status == 1)
         {
@@ -63,7 +63,7 @@ class ProjectController extends Controller
 
         $pjt->save();
 
-        return redirect('pubilsh/'.$pjt->id);
+        return redirect('publish/'.$pjt->id);
     }
 
     public function new_plan(Request $request)

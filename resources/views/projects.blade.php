@@ -149,7 +149,7 @@
                     <tr>
 
                         <th scope="row">{{$i++}}</th>
-                        <td>{{$mp->name}}</td>
+                        <td><a href="{{$mp->status <= 2 ? url('publish/'.$mp->id) : url('project/content'.$mp->id)}}">{{$mp->name}}</a></td>
 
                             <!--{{var_dump($mp  )}}-->
                             @if($mp->status==0)
@@ -194,7 +194,7 @@
 
                             <td>
                                 @if($mp->owner_id==session('user_id'))
-                                <a href="#">{{$mp->message}}</a>
+                                <a href="{{$mp->status <= 2 ? url('publish/'.$mp->id) : url('project/content'.$mp->id)}}">{{$mp->message}}</a>
                                 @else
                                     {{$mp->message}}
                                 @endif
