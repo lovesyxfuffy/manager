@@ -35,7 +35,7 @@ Route::group(['middleware' => ['web']], function () {
     });
     //
 });
-Route::group(['prefix'=>'post', 'middleware' => 'web', 'check-login'],function(){
+Route::group(['prefix'=>'post', 'middleware' => ['web', 'check-login']],function(){
     Route::get('all', 'PostController@get_all_post');//显示所有
 
     Route::post('/', ['uses' => 'PostController@new_post']);//发布帖子
@@ -45,7 +45,7 @@ Route::group(['prefix'=>'post', 'middleware' => 'web', 'check-login'],function()
     Route::get('/{id}', 'PostController@enter_post');
 
 });
-Route::group(['prefix'=>'publish', 'middleware' => 'web-no-csrf', 'check-login'],function(){
+Route::group(['prefix'=>'publish', 'middleware' => ['web-no-csrf', 'check-login','log']],function(){
 
     Route::get('/{id}', 'ProjectController@enter_project');//发布界面
     Route::get('/', function()
