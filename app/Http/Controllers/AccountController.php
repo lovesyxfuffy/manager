@@ -65,8 +65,8 @@ class AccountController extends Controller{
         if($result->count('id')!=1)
             return -1;
         else{
-            $user=$result->first(['id','username']);
-            session(['user_id'=>$user->id,'username'=>$user->username]);
+            $user=$result->first(['id','username','admin']);
+            session(['user_id'=>$user->id,'username'=>$user->username,'user_admin'=>$user->admin]);
             $response=new Response('0');
             $response->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
             return $response;//view('blank')->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
