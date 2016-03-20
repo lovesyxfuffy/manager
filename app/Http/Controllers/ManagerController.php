@@ -30,18 +30,26 @@ class ManagerController extends Controller{
         }
         $color=array('red','orange','blue','green','grey');
         $button=array('danger','warning','primary','success','grey');
-        $my_projects=DB::table('project')->join('project_user',function($join){
+        $my_projects=DB::table('project')->leftjoin('project_user',function($join){
             $join->on('project.id','=','project_user.project_id');
         })->where('project_user.user_id','=',$user_id)->orwhere('project.owner_id','=',$user_id)->get(['project.status','member_num','name','id','owner_id']);
         foreach($my_projects as $mp){
             if($mp->status==1){
-                $mp->message="有".DB::table('project_user')->where('project_id',$mp->id)->where('status',-1)->count()."条加入项目申请";
-                $mp->percent=DB::table('project_user')->where('status',0)->count()/($mp->member_num-1);
+                $apply_count=DB::table('project_user')->where('project_id',$mp->id)->where('status',-1)->count();
+                if($apply_count!=0)
+                    $mp->message="有".$apply_count."条加入项目申请";
+                else
+                    $mp->message="无新消息";
+                $mp->percent=DB::table('project_user')->where('project_id',$mp->id)->where('status',0)->count()/($mp->member_num-1);
             }
             else if($mp->status==4){
                 $query=DB::table('plan')->where('project_id',$mp->id);
                 $mp->percent=$query->where('status',1)/$mp->member_num;
-                $mp->message="有".$query->where('status',-1)->count()."条完成任务申请";
+                $apply_count=$query->where('status',-1)->count();
+                if($apply_count!=0)
+                    $mp->message="有".$apply_count."条完成任务申请";
+                else
+                    $mp->message="无新消息";
             }
             else{
                 $mp->percent=1;
