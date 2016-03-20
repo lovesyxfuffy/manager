@@ -35,15 +35,6 @@
                         </h3>
 
                         <!-- #section:pages/invoice.info -->
-                        <div class="widget-toolbar no-border invoice-info">
-                            <span class="invoice-info-label">Invoice:</span>
-                            <span class="red">#121212</span>
-
-                            <br>
-                            <span class="invoice-info-label">Date:</span>
-                            <span class="blue">04/04/2014</span>
-                        </div>
-
                         <div class="widget-toolbar hidden-480">
                             <a href="#">
                                 <i class="ace-icon fa fa-print"></i>
@@ -59,35 +50,51 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
-                                            <b>Company Info</b>
+                                            <b>项目详情</b>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <ul class="list-unstyled spaced">
                                             <li>
-                                                <i class="ace-icon fa fa-caret-right blue"></i>Street, City
+                                                <i class="ace-icon fa fa-caret-right blue"></i>项目拥有者:
+                                                <b class="blue">{{$owner_name}}</b>
                                             </li>
 
                                             <li>
-                                                <i class="ace-icon fa fa-caret-right blue"></i>Zip Code
-                                            </li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>项目名称:
+                                                <b class="blue" style="word-wrap: break-word;">
 
-                                            <li>
-                                                <i class="ace-icon fa fa-caret-right blue"></i>State, Country
+                                                    {{$project->name}}
+                                                </b>
                                             </li>
 
                                             <li>
                                                 <i class="ace-icon fa fa-caret-right blue"></i>
-                                                Phone:
-                                                <b class="red">111-111-111</b>
+                                                项目性质:
+                                                <b class="red">
+                                                @if($project->attribute==1)
+                                                    比赛项目
+                                                @elseif($project->attribute==2)
+                                                    外包项目
+                                                @elseif($project->attribute==3)
+                                                    原创项目
+                                                @endif
+                                                </b>
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                酬金:
+                                                <b class="green">￥{{$project->reward}}</b>
                                             </li>
 
                                             <li class="divider"></li>
 
                                             <li>
                                                 <i class="ace-icon fa fa-caret-right blue"></i>
-                                                Paymant Info
+                                                起止时间
+                                                <b class="grey">{{$project->starttime}} —— {{$project->endtime}}</b>
                                             </li>
                                         </ul>
                                     </div>
@@ -96,30 +103,20 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
-                                            <b>Customer Info</b>
+                                            <b>人员详情</b>
                                         </div>
                                     </div>
 
                                     <div>
                                         <ul class="list-unstyled  spaced">
                                             <li>
-                                                <i class="ace-icon fa fa-caret-right green"></i>Street, City
+                                                <i class="ace-icon fa fa-caret-right green"></i>{{$owner_name}}
                                             </li>
-
+                                            @foreach($member_names as $mn)
                                             <li>
-                                                <i class="ace-icon fa fa-caret-right green"></i>Zip Code
+                                                <i class="ace-icon fa fa-caret-right green"></i>{{$mn->username}}
                                             </li>
-
-                                            <li>
-                                                <i class="ace-icon fa fa-caret-right green"></i>State, Country
-                                            </li>
-
-                                            <li class="divider"></li>
-
-                                            <li>
-                                                <i class="ace-icon fa fa-caret-right green"></i>
-                                                Contact Info
-                                            </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div><!-- /.col -->
@@ -132,55 +129,51 @@
                                     <thead>
                                     <tr>
                                         <th class="center">#</th>
-                                        <th>Product</th>
-                                        <th class="hidden-xs">Description</th>
-                                        <th class="hidden-480">Discount</th>
-                                        <th>Total</th>
+                                        <th>任务名称</th>
+                                        <th >负责人</th>
+                                        <th class="hidden-xs">开始时间</th>
+                                        <th class="hidden-480">结束时间</th>
+                                        <th>状态</th>
+                                        <th>提交排期</th>
                                     </tr>
                                     </thead>
-
+                                    <!--{{$i=1}}-->
+                                    @foreach($plans as $plan)
                                     <tbody>
-                                    <tr>
-                                        <td class="center">1</td>
+                                    <tr id="plan_{{$plan->id}}">
+                                        <td class="center">{{$i++}}</td>
 
                                         <td>
-                                            <a href="#">google.com</a>
+                                            <a href="#">{{$plan->name}}</a>
                                         </td>
                                         <td class="hidden-xs">
-                                            1 year domain registration
+                                            {{$plan->username}}
                                         </td>
-                                        <td class="hidden-480"> --- </td>
-                                        <td>$10</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="center">2</td>
-
+                                        <td class="hidden-480"> {{$plan->start_time}} </td>
+                                        <td>{{$plan->end_time}}</td>
                                         <td>
-                                            <a href="#">yahoo.com</a>
-                                        </td>
-                                        <td class="hidden-xs">
-                                            5 year domain registration
-                                        </td>
-                                        <td class="hidden-480"> 5% </td>
-                                        <td>$45</td>
-                                    </tr>
+                                            @if($plan->status==0)
+                                                <b class="blue">未完成</b>
+                                            @elseif($plan->status==1)
+                                                <b class="red">完成待审查</b>
+                                            @elseif($plan->status==2)
+                                                <b class="green">已完成</b>
+                                            @endif
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                    <tr>
-                                        <td class="center">3</td>
-                                        <td>Hosting</td>
-                                        <td class="hidden-xs"> 1 year basic hosting </td>
-                                        <td class="hidden-480"> 10% </td>
-                                        <td>$90</td>
-                                    </tr>
+                                        </td>
+                                        <td>@if($plan->user_id==session('user_id')&&$plan->status==0)
+                                                <button class="btn btn-xs btn-success" onclick="Submit({{$plan->id}})">
+                                                    <i class="ace-icon fa fa-check bigger-120"></i>
+                                                </button>
 
-                                    <tr>
-                                        <td class="center">4</td>
-                                        <td>Design</td>
-                                        <td class="hidden-xs"> Theme customization </td>
-                                        <td class="hidden-480"> 50% </td>
-                                        <td>$250</td>
+                                                <button class="btn btn-xs btn-danger" onclick="Submit({{$plan->id}})">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </button>
+                                            @endif</td>
                                     </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -188,19 +181,28 @@
                             <div class="hr hr8 hr-double hr-dotted"></div>
 
                             <div class="row">
-                                <div class="col-sm-5 pull-right">
-                                    <h4 class="pull-right">
-                                        Total amount :
-                                        <span class="red">$395</span>
-                                    </h4>
-                                </div>
-                                <div class="col-sm-7 pull-left"> Extra Information </div>
+
+                                <div class="col-sm-2 pull-left">
+                                    <div style="" class="progress progress-striped pos-rel" data-percent="{{floor($percent)}}%">
+                                        <div class="progress-bar progress-bar-success" style="width:{{floor($percent)}}%;"></div>
+                                    </div> </div>
                             </div>
 
                             <div class="space-6"></div>
                             <div class="well">
-                                Thank you for choosing Ace Company products.
-                                We believe you will be satisfied by our services.
+                            @foreach($plans as $plan)
+                                @if($plan->status==1&&$project->owner_id==session('user_id'))
+                                <div class="alert alert-warning">
+                                    <strong>
+                                        <i class="ace-icon fa fa-check"></i>
+                                        {{$plan->username}}提交了完成{{$plan->name}}的请求 ！
+                                    </strong>
+                                    <button style="float:right" onclick="accept({{$plan->user_id}},{{$plan->id}},this)">通过</button>
+                                    <button style="float:right" onclick="reject({{$plan->user_id}},{{$plan->id}},this)">拒绝</button>
+                                    <br>
+                                </div>
+                                @endif
+                            @endforeach
                             </div>
                         </div>
                     </div>
@@ -219,5 +221,61 @@
 @stop
 
 @section('inline-scripts')
+<script>
+    function Submit(id){
+        $.ajax({
+            type:'post',
+            data:{
+                plan_id:id,
+                _token:'<?php echo csrf_token()?>',
 
+            },
+            url:'{{URL('project/plan/submit')}}',
+            success:function(data){
+                if(data==1){
+                    alert('排期完成请求已提交')
+                    window.location.reload()
+                }
+
+            }
+        })
+    }
+</script>
+<script>
+    function accept(user_id,plan_id,obj){
+        $.ajax({
+            type:'post',
+            data:{
+                user_id:user_id,
+                plan_id:plan_id,
+                _token:'<?php echo csrf_token()?>',
+
+            },
+            url:'{{URL('project/plan/accept')}}',
+            success:function(data){
+                if(data==1){
+                    window.location.reload()
+                }
+
+            }
+        })
+    }
+    function reject(user_id,plan_id,obj){
+        $.ajax({
+            type:'post',
+            data:{
+                user_id:user_id,
+                plan_id:plan_id,
+                _token:'<?php echo csrf_token()?>',
+
+            },
+            url:'{{URL('project/plan/reject')}}',
+            success:function(data){
+                if(data==1){
+                    window.location.reload()
+                }
+            }
+        })
+    }
+</script>
 @stop

@@ -10,6 +10,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Mockery\CountValidator\Exception;
 
 class ManagerController extends Controller{
     function view(){
@@ -55,7 +56,40 @@ class ManagerController extends Controller{
         DB::table('project_user')->insert(['user_id'=>session('user_id'),'project_id'=>$project_id,'status'=>'-1']);
         return 0;
     }
-    function content_view(Request $request){
+    function content_view(Request $request,$id){
+        $project=DB::table('project')->where('id',$id)->where('status',2)->get()[0];
+        $member_names=DB::table('project_user')->join('user',function($join){
+            $join->on('user.id','=','user_id');
+        })->where('project_id',$id)->get(['username']);
+        $owner_name=DB::table('user')->where('id',$project->owner_id)->get(['username'])[0]->username;
+        $plans=DB::table('plans')->where('project_id',$project->id)->join('user',function($join){
+            $join->on('user.id','=','user_id');
+        })->get(['name','content','start_time','username','end_time','user.id as user_id','plans.id as id','status','project_id']);
+        $finish=0;
+        foreach($plans as $plan){
+            if($plan->status==2){
+                $finish++;
+            }
+        }
+        $percent=$finish/count($plans)*100;
+        return view('project_content')->with('project',$project)->with('member_names',$member_names)->with('owner_name',$owner_name)->with('plans',$plans)->with('percent',$percent);
+    }
+    function plan(Request $request,$sign){
+        if($sign=='submit'){
+            $plan_id=$request->input('plan_id');
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>'1']);
+            return 1;
+        }
+        elseif($sign=='accept'){
+            $plan_id=$request->input('plan_id');
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>'2']);
+            return 1;
+        }
+        elseif($sign=='reject'){
+            $plan_id=$request->input('plan_id');
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>'0']);
+            return 1;
+        }
 
     }
 }

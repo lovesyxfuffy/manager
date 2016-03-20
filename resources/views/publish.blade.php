@@ -256,8 +256,8 @@
                                                     <i class="ace-icon fa fa-check"></i>
                                                     {{$apply->username}}申请加入！
                                                 </strong>
-                                                <button onclick="accept({{$apply->user_id}})">同意</button>
-                                                <button onclick="reject({{$apply->user_id}})">拒绝</button>
+                                                <button style="float:right" onclick="accept({{$apply->user_id}})">同意</button>
+                                                <button style="float:right" onclick="reject({{$apply->user_id}})">拒绝</button>
                                                 <br>
                                             </div>
                                         @endforeach
