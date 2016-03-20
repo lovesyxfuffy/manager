@@ -19,11 +19,17 @@ class CheckLogin{
             if($username!=''&&$password!=''){
                 $result = DB::table('user')->where('username', $username)->where('password', $password);
                 if ($result->count('id')==1) {
+<<<<<<< HEAD
                     $id = $result->first(['id'])->id;
                     $admin = $result->first(['admin'])->admin;
                     session(['user_id' => $id]);
                     session(['user_admin' => $admin]);
                     session(['item' => $request->input('item')]);
+=======
+                    $user = $result->first(['id','username']);
+                    session(['user_id' => $user->id]);
+                    session(['username'=>$user->username]);
+>>>>>>> bfcf36b5a705a1a0a431f697f3a514babba680dd
                     return $next($request);
                 } else
 
