@@ -45,7 +45,7 @@ Route::group(['prefix'=>'post', 'middleware' => 'web', 'check-login'],function()
     Route::get('/{id}', 'PostController@enter_post');
 
 });
-Route::group(['prefix'=>'publish', 'middleware' => 'web-no-csrf', 'check-login'],function(){
+Route::group(['prefix'=>'publish', 'middleware' => ['web-no-csrf', 'check-login']],function(){
 
     Route::get('/{id}', 'ProjectController@enter_project');//发布界面
     Route::get('/', function()

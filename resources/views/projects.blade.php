@@ -216,6 +216,8 @@
 @section('inline-scripts')
 
 <script>
+    $('#item2').addClass('active');
+    $('#item21').addClass('active');
     function getcontent(id){
         $('#content').html($('#project_'+id).val())
     }

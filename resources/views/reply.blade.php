@@ -68,7 +68,7 @@
 
                 <div class="post-offset">
                     <div class="question fmt">
-                       <pre class="hljs"><div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><code>{{$replies[0]->content}}</code></pre>
+                       <pre class="hljs"><div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><code>{{isset($replies[0]) ? $replies[0]->content : ''}}</code></pre>
 
                     </div>
 
@@ -282,4 +282,7 @@
 
 
     </div>
+    <script>
+        $('#item4').addClass('active');
+    </script>
 @stop

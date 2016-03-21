@@ -462,6 +462,8 @@
 @stop
 @section('inline-scripts')
     <script>
+        $('#item2').addClass('active');
+        $('#item22').addClass('active');
         function accept(id)
         {
             $.ajax(
