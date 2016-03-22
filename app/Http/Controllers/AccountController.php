@@ -42,9 +42,9 @@ class AccountController extends Controller{
         return json_encode($result);
         else{
             $tmp=new User_tmp();
-            $tmp->username=$username;
+            $tmp->loginname=$username;
             $tmp->password=$password;
-            $tmp->realname=$realname;
+            $tmp->username=$realname;
             if($identity=="学生")
                 $tmp->identity=0;
             else if($identity=="教师")
@@ -60,7 +60,7 @@ class AccountController extends Controller{
     function login(Request $request){
         $username=$request->input('username');
         $password=$request->input('password');
-        $result=DB::table('user')->where('username',$username)->where('password',$password);
+        $result=DB::table('user')->where('loginname',$username)->where('password',$password);
 
         if($result->count('id')!=1)
             return -1;
@@ -68,8 +68,8 @@ class AccountController extends Controller{
             $user=$result->first(['id','username','admin']);
             session(['user_id'=>$user->id,'username'=>$user->username,'user_admin'=>$user->admin]);
             $response=new Response('0');
-            $response->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
-            return $response;//view('blank')->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
+            return $response->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
+            //view('blank')->withCookie(Cookie('username',$username))->withCookie(Cookie('password',$password));
         }
 
     }

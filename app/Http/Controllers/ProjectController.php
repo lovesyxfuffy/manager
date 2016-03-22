@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 use App\User;
 use App\Project;
 use App\Plan;
-
+use App\Log;
 class ProjectController extends Controller
 {
     public function enter_project(Request $request, $id)
@@ -62,7 +62,13 @@ class ProjectController extends Controller
         $pjt->endtime = $request->input('pjt_endTime');
 
         $pjt->save();
-
+        $log=new Log();
+        $username=session('username');
+        $project_name=$pjt->name;
+        $log->content="$username 发布了一个新的项目 $project_name";
+        $log->more=$pjt->content;
+        $log->sign='publish_project';
+        $log->save();
         return redirect('publish/'.$pjt->id);
     }
 

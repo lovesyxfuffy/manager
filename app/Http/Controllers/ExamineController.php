@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Project;
 use DB;
+use App\Log;
 class ExamineController extends Controller{
 
     function view(Request $request){
@@ -29,6 +30,12 @@ class ExamineController extends Controller{
     function accept(Request $request){
         $project_id=$request->input('project_id');
         $project=Project::find($project_id);
+        if($project->status==1){
+            $log=new Log();
+            $log->content='管理员通过了'.User::find($project->owner_id)->username.'提交的 项目'.$project->name.'的审核，项目正式开始';
+            $log->sign='project_start';
+            $log->save();
+        }
         $project->status+=1;
         $project->save();
         return 1;

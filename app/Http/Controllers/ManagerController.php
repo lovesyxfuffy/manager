@@ -6,6 +6,8 @@
  * Time: 18:30
  */
 namespace App\Http\Controllers;
+use App\Log;
+use App\Project;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -91,7 +93,14 @@ class ManagerController extends Controller{
         elseif($sign=='accept'){
             $plan_id=$request->input('plan_id');
             DB::table('plans')->where('id',$plan_id)->update(['status'=>'2']);
+            $plan=DB::table('plans')->where('id',$plan_id)->get(['name','content','project_id']);
+            $project=Project::find($plan->project_id);
+            $log=new Log();
+            $log->content=session('username').'完成了项目'.$project->name."中的".$plan->name."任务";
+            $log->more=$plan->content;
+            $log->save();
             return 1;
+
         }
         elseif($sign=='reject'){
             $plan_id=$request->input('plan_id');

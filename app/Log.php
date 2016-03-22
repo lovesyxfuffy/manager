@@ -12,5 +12,16 @@ class Log{
     public $content;
     public $date;
     public $time;
-    public $url;
+    public $sign;
+    public function __construct(){
+        $this->username=session('username');
+        $this->date=date('Y-m-d');
+        $this->time=date('h:i:s');
+    }
+
+    public function save(){
+        if (file_put_contents('G:/wamp/www/manager/Log/' . date('Y-m-d') . '.txt', json_encode($this) . "\r\n", FILE_APPEND))
+            return true;
+        return false;
+    }
 }
