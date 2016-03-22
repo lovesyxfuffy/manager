@@ -420,8 +420,8 @@
         </div><!-- /.sidebar-shortcuts -->
 
         <ul class="nav nav-list">
-            <li class="{{session('item') == 1 ? 'active' : ''}}">
-                <a href="index.html?item=1">
+            <li id="item1" class="">
+                <a href="index.html">
                     <i class="menu-icon fa fa-tachometer"></i>
                     <span class="menu-text"> 概览 </span>
                 </a>
@@ -429,7 +429,7 @@
                 <b class="arrow"></b>
             </li>
 
-            <li class="{{session('item') == 2 ? 'active' : ''}}">
+            <li id="item2" class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> 项目管理 </span>
@@ -440,8 +440,8 @@
                 <b class="arrow"></b>
 
                 <ul class="submenu">
-                    <li class="">
-                        <a href="{{url('project')}}?item=2">
+                    <li id="item21" class="">
+                        <a href="{{url('project')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             我的项目
                         </a>
@@ -449,8 +449,8 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class="">
-                        <a href="{{url('publish')}}?item=2">
+                    <li id="item22" class="">
+                        <a href="{{url('publish')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             发布项目
                         </a>
@@ -458,8 +458,8 @@
                         <b class="arrow"></b>
                     </li>
                     @if(session('user_admin') == 1)
-                    <li class="">
-                        <a href="{{url('examine')}}?item=2">
+                    <li id="item23" class="">
+                        <a href="{{url('examine')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             审核项目
                         </a>
@@ -496,7 +496,7 @@
                 </ul>
             </li>
 
-            <li class="{{session('item') == 3 ? 'active' : ''}}">
+            <li id="item3" class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> 实验室管理 </span>
@@ -508,7 +508,7 @@
 
                 <ul class="submenu">
                     <li class="">
-                        <a href="form-elements.html?item=3">
+                        <a href="form-elements.html">
                             <i class="menu-icon fa fa-caret-right"></i>
                             实验室概况
                         </a>
@@ -517,7 +517,7 @@
                     </li>
 
                     <li class="">
-                        <a href="form-wizard.html?item=3">
+                        <a href="form-wizard.html">
                             <i class="menu-icon fa fa-caret-right"></i>
                             实验室人员管理
                         </a>
@@ -526,7 +526,7 @@
                     </li>
 
                     <li class="">
-                        <a href="wysiwyg.html?item=3">
+                        <a href="wysiwyg.html">
                             <i class="menu-icon fa fa-caret-right"></i>
                             实验室项目管理
                         </a>
@@ -536,8 +536,8 @@
                 </ul>
             </li>
 
-            <li class="{{session('item') == 4 ? 'active' : ''}}">
-                <a href="{{url('post/all')}}?item=4">
+            <li id="item4" class="">
+                <a href="{{url('post/all')}}">
                     <i class="menu-icon fa fa-list-alt"></i>
                     <span class="menu-text"> 论坛 </span>
                 </a>
@@ -573,7 +573,7 @@
             </ul><!-- /.breadcrumb -->
 
             <!-- #section:basics/content.searchbox -->
-            <div class="nav-search" id="nav-search">
+            <!--div class="nav-search" id="nav-search">
                 <form class="form-search">
 							<span class="input-icon">
 								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
@@ -642,4 +642,10 @@
 
 @yield('inline-scripts')
 </body>
+<script>
+    $(document).ready(function(){
+        if(cur_pos == 4)
+            $('#item4').addClass('active');
+    });
+</script>
 </html>

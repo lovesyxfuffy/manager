@@ -242,6 +242,7 @@
     }
 </script>
 <script>
+    $('#item2').addClass('active');
     function accept(user_id,plan_id,obj){
         $.ajax({
             type:'post',

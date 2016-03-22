@@ -174,7 +174,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                     <span class="white">&times;</span>
                                 </button>
-                                Results for "Latest Registered Domains
+                                排期情况
                             </div>
                         </div>
 
@@ -210,7 +210,7 @@
                                 Close
                             </button>
 
-                            <ul class="pagination pull-right no-margin">
+                            <!--ul class="pagination pull-right no-margin">
                                 <li class="prev disabled">
                                     <a href="#">
                                         <i class="ace-icon fa fa-angle-double-left"></i>
@@ -225,16 +225,14 @@
                                     <a href="#">2</a>
                                 </li>
 
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
+
 
                                 <li class="next">
                                     <a href="#">
                                         <i class="ace-icon fa fa-angle-double-right"></i>
                                     </a>
                                 </li>
-                            </ul>
+                            </ul-->
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -281,6 +279,8 @@
 
 @section('inline-scripts')
     <script type="text/javascript">
+        $('#item2').addClass('active');
+        $('#item23').addClass('active');
         jQuery(function($) {
             var oTable1 =
                     $('#sample-table-2')
@@ -363,6 +363,7 @@
                     _token:'<?php echo csrf_token()?>'
                 },
                 success:function(data){
+                    $('#plans').html('');
                    var json=eval('('+data+')')
                     for(var i=0;i<json.length;i++)
                    $('#plans').append('<tr><td>'+json[i].username+'</td><td>'+json[i].start_time+'</td><td>'+json[i].end_time+'</td><td>'+json[i].content+'</td></tr>')
