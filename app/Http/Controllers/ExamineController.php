@@ -15,8 +15,8 @@ use App\Log;
 class ExamineController extends Controller{
 
     function view(Request $request){
-        $project_wait=DB::table('project')->where('status','=','0')->get();
-        $project_plan=DB::table('project')->where('status','=','2')->get();
+        $project_wait=DB::table('project')->where('status','=',$this->PROJECT_SUBMIT)->get();
+        $project_plan=DB::table('project')->where('status','=',$this->PROJECT_PLAN_SUBMIT)->get();
         return view('examine')->with('project_wait',$project_wait)->with('project_plan',$project_plan);
     }
     function get(Request $request){
@@ -30,7 +30,7 @@ class ExamineController extends Controller{
     function accept(Request $request){
         $project_id=$request->input('project_id');
         $project=Project::find($project_id);
-        if($project->status==1){
+        if($project->status==$this->PROJECT_PLAN_SUBMIT){
             $log=new Log();
             $log->content='管理员通过了'.User::find($project->owner_id)->username.'提交的 项目'.$project->name.'的审核，项目正式开始';
             $log->sign='project_start';
@@ -42,13 +42,13 @@ class ExamineController extends Controller{
     }
     function reject(Request $request){
         $project_id=$request->input('project_id');
-        $result=DB::table('project')->where('id','=',$project_id);
-        if($result->first()->status=='2'){
-            $result->update(['status'=>'-3']);
+        $result=DB::table('project')->where('id','=',$project_id)->first();
+        if($result->status==$this->PROJECT_PLAN_SUBMIT){
+            $result->update(['status'=>$this->PROJECT_PLAN_REJECTED]);
             DB::table('plans')->where('project_id','=',$project_id)->delete();
         }
-        else{
-            $result->update(['status'=>'-1']);
+        elseif($result->status==$this->PROJECT_SUBMIT){
+            $result->update(['status'=>$this->PROJECT_SUBMIT_REJECTED]);
         }
         return 1;
     }

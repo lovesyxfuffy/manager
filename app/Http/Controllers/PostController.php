@@ -19,7 +19,7 @@ class PostController extends Controller
 {
     /**
      * 发表新的帖子
-     *
+     * @param Request $request
      * @return int status
      * 0为成功，1为session缺失（暂时不会出现），2为表单项缺失
      */
@@ -57,8 +57,7 @@ class PostController extends Controller
     }
 
     /**
-     * @param  int  $start(可为空， 默认为0)
-     * @param  int  $num(可为空，默认为10)
+     * @param  Request $request
      * 获得指定条数的的帖子
      * @return json
      * 返回值包括title, author_id, click_time, create_time项

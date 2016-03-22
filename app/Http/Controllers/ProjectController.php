@@ -23,7 +23,7 @@ class ProjectController extends Controller
         if(count($pjt) <= 0)
             return abort(404);
         $status = $pjt[0]->status;
-        if($status == 1)
+        if($status == $this->PROJECT_SUBMIT_ACCEPTED)
         {
             $applies = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=-1', [$id]);
             $members = DB::select('select user_id, username from project_user left join user on user_id = user.id where project_id = ? and  status=?', [$id,0]);
@@ -57,7 +57,7 @@ class ProjectController extends Controller
         $pjt->reward = $request->input('pjt_reward');
         $pjt->member_num = $request->input('pjt_memberNum');
         $pjt->owner_id = $request->session()->get('user_id');
-        $pjt->status = 0;
+        $pjt->status = $this->PROJECT_SUBMIT;
         $pjt->starttime = $request->input('pjt_startTime');
         $pjt->endtime = $request->input('pjt_endTime');
 
@@ -112,7 +112,7 @@ class ProjectController extends Controller
             'project_id' => 'required|numeric',
             'user_id' => 'required|numeric',
         ]);
-        DB::update('update project_user set status = 0 where project_id = ? and user_id = ?', [$request->input('project_id'), $request->input('user_id')]);
+        DB::update('update project_user set status = ? where project_id = ? and user_id = ?', [$this->JOIN_QUERY_ACCEPTED,$request->input('project_id'), $request->input('user_id')]);
         return 0;
     }
 
@@ -131,7 +131,7 @@ class ProjectController extends Controller
         $this->validate($request, [
             'project_id' => 'required|numeric',
         ]);
-        DB::update('update project set status = 2 where id = ?', [$request->input('project_id')]);
+        DB::update('update project set status = ? where id = ?', [$this->PROJECT_PLAN_SUBMIT,$request->input('project_id')]);
         return 0;
     }
 

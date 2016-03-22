@@ -46,11 +46,10 @@ Route::group(['prefix'=>'post', 'middleware' => ['web', 'check-login']],function
 
 });
 
-Route::group(['prefix'=>'publish', 'middleware' => ['web-no-csrf', 'check-login','log']],function(){
+Route::group(['prefix'=>'publish', 'middleware' => ['web-no-csrf', 'check-login']],function(){
 
     Route::get('/{id}', 'ProjectController@enter_project');//发布界面
-    Route::get('/', function()
-    {
+    Route::get('/', function(){
         return view('publish');
     });
     Route::post('accept', ['uses' => 'ProjectController@accept']);  //同意成员申请

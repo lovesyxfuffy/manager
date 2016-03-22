@@ -22,7 +22,7 @@ class CheckLogin{
                     session(['user_id' => $user->id]);
                     session(['username'=>$user->username]);
                     session(['user_admin' => $user->admin]);
-                    session(['item' => $request->input('item')]);
+                    //session(['item' => $request->input('item')]);
                     return $next($request);
                 } else
                     return redirect('account/login');

@@ -19,7 +19,7 @@ class ManagerController extends Controller{
         $user_id=session('user_id');
         $result=DB::table('project')->join('user',function($join){
             $join->on('user.id','=','project.owner_id');
-        })->where('status','=','1')->where('owner_id','<>',$user_id)->get(['user.id as user_id','project.id as id','content','starttime','endtime','attribute','username','name','reward']);
+        })->where('status','=',$this->PROJECT_SUBMIT_ACCEPTED)->where('owner_id','<>',$user_id)->get(['user.id as user_id','project.id as id','content','starttime','endtime','attribute','username','name','reward']);
 
         $length=count($result);
         for($i=0;$i<$length;$i++){
@@ -36,18 +36,18 @@ class ManagerController extends Controller{
             $join->on('project.id','=','project_user.project_id');
         })->where('project_user.user_id','=',$user_id)->orwhere('project.owner_id','=',$user_id)->get(['project.status','member_num','name','id','owner_id']);
         foreach($my_projects as $mp){
-            if($mp->status==1){
-                $apply_count=DB::table('project_user')->where('project_id',$mp->id)->where('status',-1)->count();
+            if($mp->status==$this->PROJECT_SUBMIT_ACCEPTED){
+                $apply_count=DB::table('project_user')->where('project_id',$mp->id)->where('status',$this->JOIN_QUERY_SUBMIT)->count();
                 if($apply_count!=0)
                     $mp->message="有".$apply_count."条加入项目申请";
                 else
                     $mp->message="无新消息";
-                $mp->percent=DB::table('project_user')->where('project_id',$mp->id)->where('status',0)->count()/($mp->member_num-1);
+                $mp->percent=DB::table('project_user')->where('project_id',$mp->id)->where('status',$this->JOIN_QUERY_ACCEPTED)->count()/($mp->member_num-1);
             }
-            else if($mp->status==4){
-                $query=DB::table('plan')->where('project_id',$mp->id);
-                $mp->percent=$query->where('status',1)/$mp->member_num;
-                $apply_count=$query->where('status',-1)->count();
+            else if($mp->status==$this->PROJECT_PLAN_ACCEPTED_AND_START){
+
+                $mp->percent=DB::table('plan')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_ACCEPTED)->count()/DB::table('plan')->where('project_id',$mp->id)->count();
+                $apply_count=DB::table('plan')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_SUBMIT)->count();
                 if($apply_count!=0)
                     $mp->message="有".$apply_count."条完成任务申请";
                 else
@@ -67,7 +67,7 @@ class ManagerController extends Controller{
         return 0;
     }
     function content_view(Request $request,$id){
-        $project=DB::table('project')->where('id',$id)->where('status',2)->get()[0];
+        $project=DB::table('project')->where('id',$id)->where('status',$this->PROJECT_PLAN_ACCEPTED_AND_START)->first();
         $member_names=DB::table('project_user')->join('user',function($join){
             $join->on('user.id','=','user_id');
         })->where('project_id',$id)->get(['username']);
@@ -77,7 +77,7 @@ class ManagerController extends Controller{
         })->get(['name','content','start_time','username','end_time','user.id as user_id','plans.id as id','status','project_id']);
         $finish=0;
         foreach($plans as $plan){
-            if($plan->status==2){
+            if($plan->status==$this->PLAN_FINISHED_ACCEPTED){
                 $finish++;
             }
         }
@@ -87,24 +87,30 @@ class ManagerController extends Controller{
     function plan(Request $request,$sign){
         if($sign=='submit'){
             $plan_id=$request->input('plan_id');
-            DB::table('plans')->where('id',$plan_id)->update(['status'=>'1']);
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>$this->PLAN_FINISHED_SUBMIT]);
             return 1;
         }
         elseif($sign=='accept'){
             $plan_id=$request->input('plan_id');
-            DB::table('plans')->where('id',$plan_id)->update(['status'=>'2']);
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>$this->PLAN_FINISHED_ACCEPTED]);
             $plan=DB::table('plans')->where('id',$plan_id)->get(['name','content','project_id']);
             $project=Project::find($plan->project_id);
             $log=new Log();
             $log->content=session('username').'完成了项目'.$project->name."中的".$plan->name."任务";
             $log->more=$plan->content;
             $log->save();
+            if(DB::table('plans')->where('id',$plan_id)->where('status',"<>",$this->PLAN_FINISHED_ACCEPTED)->count('id')==0){
+                DB::table('project')->where('id',$plan->project_id)->update(['status'=>$this->PROJECT_FINISHED]);
+                $log2=new Log();
+                $log2->content='项目'.$project->name."已完成";
+                $log2->save();
+            }
             return 1;
 
         }
         elseif($sign=='reject'){
             $plan_id=$request->input('plan_id');
-            DB::table('plans')->where('id',$plan_id)->update(['status'=>'0']);
+            DB::table('plans')->where('id',$plan_id)->update(['status'=>$this->PLAN_SUBMIT]);
             return 1;
         }
 
