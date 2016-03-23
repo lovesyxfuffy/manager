@@ -77,8 +77,11 @@ Route::group(['prefix'=>'examine','middleware'=>'web'],function(){
     Route::post('accept','ExamineController@accept');
 });
 Route::group(['prefix'=>'project','middleware'=>['web', 'check-login']],function(){
-    Route::get('/','ManagerController@view');//项目管理
+    Route::get('/{sign}','ManagerController@view');//项目管理
     Route::post('join','ManagerController@join');
     Route::get('content/{id}','ManagerController@content_view');//单个项目详情
     Route::post('plan/{sign}','ManagerController@plan');
+});
+Route::group(['prefix'=>'dashboard','middleware'=>['web', 'check-login']],function(){
+    Route::get('time-line','DashBoardController@time_line');
 });

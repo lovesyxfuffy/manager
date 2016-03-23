@@ -154,9 +154,9 @@
                                         <td>
                                             @if($plan->status==0)
                                                 <b class="blue">未完成</b>
-                                            @elseif($plan->status==1)
+                                            @elseif($plan->status==-1)
                                                 <b class="red">完成待审查</b>
-                                            @elseif($plan->status==2)
+                                            @elseif($plan->status==1)
                                                 <b class="green">已完成</b>
                                             @endif
                                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -191,7 +191,7 @@
                             <div class="space-6"></div>
                             <div class="well">
                             @foreach($plans as $plan)
-                                @if($plan->status==1&&$project->owner_id==session('user_id'))
+                                @if($plan->status==-1&&$project->owner_id==session('user_id'))
                                 <div class="alert alert-warning">
                                     <strong>
                                         <i class="ace-icon fa fa-check"></i>

@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 use App\Log;
 use App\Project;
+use App\User;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ use Illuminate\Http\Response;
 use Mockery\CountValidator\Exception;
 
 class ManagerController extends Controller{
-    function view(){
+    function view($sign){
         $user_id=session('user_id');
         $result=DB::table('project')->join('user',function($join){
             $join->on('user.id','=','project.owner_id');
@@ -46,8 +47,8 @@ class ManagerController extends Controller{
             }
             else if($mp->status==$this->PROJECT_PLAN_ACCEPTED_AND_START){
 
-                $mp->percent=DB::table('plan')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_ACCEPTED)->count()/DB::table('plan')->where('project_id',$mp->id)->count();
-                $apply_count=DB::table('plan')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_SUBMIT)->count();
+                $mp->percent=DB::table('plans')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_ACCEPTED)->count()/DB::table('plans')->where('project_id',$mp->id)->count();
+                $apply_count=DB::table('plans')->where('project_id',$mp->id)->where('status',$this->PLAN_FINISHED_SUBMIT)->count();
                 if($apply_count!=0)
                     $mp->message="有".$apply_count."条完成任务申请";
                 else
@@ -59,7 +60,11 @@ class ManagerController extends Controller{
             }
         }
         //return var_dump($result);
-        return view('projects')->with('projects',$result)->with('color',$color)->with('button',$button)->with('my_projects',$my_projects);
+        if($sign=='my-projects')
+            return view('projects')->with('my_projects',$my_projects);
+        elseif ($sign=='projects-join')
+            return view('projects_joinable')->with('projects',$result)->with('color',$color)->with('button',$button);
+
     }
     function join(Request $request){
         $project_id=$request->input('project_id');
@@ -67,7 +72,7 @@ class ManagerController extends Controller{
         return 0;
     }
     function content_view(Request $request,$id){
-        $project=DB::table('project')->where('id',$id)->where('status',$this->PROJECT_PLAN_ACCEPTED_AND_START)->first();
+        $project=DB::table('project')->where('id',$id)->where('status',$this->PROJECT_PLAN_ACCEPTED_AND_START)->orwhere('status',$this->PROJECT_FINISHED)->first();
         $member_names=DB::table('project_user')->join('user',function($join){
             $join->on('user.id','=','user_id');
         })->where('project_id',$id)->get(['username']);
@@ -93,16 +98,19 @@ class ManagerController extends Controller{
         elseif($sign=='accept'){
             $plan_id=$request->input('plan_id');
             DB::table('plans')->where('id',$plan_id)->update(['status'=>$this->PLAN_FINISHED_ACCEPTED]);
-            $plan=DB::table('plans')->where('id',$plan_id)->get(['name','content','project_id']);
+            $plan=DB::table('plans')->where('id',$plan_id)->get(['name','content','project_id','user_id'])[0];
             $project=Project::find($plan->project_id);
             $log=new Log();
-            $log->content=session('username').'完成了项目'.$project->name."中的".$plan->name."任务";
+            $log->content=User::find($plan->user_id)->username.'完成了项目'.$project->name."中的".$plan->name."任务";
             $log->more=$plan->content;
+            $log->sign='plan_finished';
             $log->save();
-            if(DB::table('plans')->where('id',$plan_id)->where('status',"<>",$this->PLAN_FINISHED_ACCEPTED)->count('id')==0){
+            if(DB::table('plans')->where('id',$project->id)->where('status',"<>",$this->PLAN_FINISHED_ACCEPTED)->count('id')==0){
                 DB::table('project')->where('id',$plan->project_id)->update(['status'=>$this->PROJECT_FINISHED]);
                 $log2=new Log();
                 $log2->content='项目'.$project->name."已完成";
+                $log2->sign='project_finished';
+                $log2->project_id=$project->id;
                 $log2->save();
             }
             return 1;

@@ -20,8 +20,16 @@ class Log{
     }
 
     public function save(){
-        if (file_put_contents('G:/wamp/www/manager/Log/' . date('Y-m-d') . '.txt', json_encode($this) . "\r\n", FILE_APPEND))
+        if (file_put_contents('G:/wamp/www/manager/Log/' . date('Y-m-d') . '.txt', json_encode($this) . ",", FILE_APPEND))
             return true;
         return false;
+    }
+
+    public static function read($date){
+        $str='';
+        if(file_exists('G:/wamp/www/manager/Log/' . $date . '.txt'))
+            $str=file_get_contents('G:/wamp/www/manager/Log/' . $date . '.txt');
+        return $str;
+
     }
 }

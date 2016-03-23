@@ -467,6 +467,14 @@
                         <b class="arrow"></b>
                     </li>
                     @endif
+                    <li id="item24" class="">
+                        <a href="{{url('dashboard/time-line')}}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            时间轴
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
                     <!--li class="">
                         <a href="tables.html">
                             <i class="menu-icon fa fa-caret-right"></i>

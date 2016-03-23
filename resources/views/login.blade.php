@@ -373,8 +373,12 @@
 
             url:"{{URL('account/login')}}",
             success:function(data,status){
-                if(data==0)
-                        alert("登陆成功")
+                if(data==0){
+
+                    alert("登录成功")
+                    window.location.href='{{ URL('/project')}}'
+                }
+
                 else if(data==-1)
                         alert("登录失败")
             }
